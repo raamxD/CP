@@ -7,11 +7,12 @@ struct Modular {
    
     int val; 
     
+    Modular(){}
     Modular(long long _val){
-		val = Normalize(_val);
+	val = Normalize(_val);
     }
     Modular(int _val){
-		val = Normalize(_val);
+	val = Normalize(_val);
     }
     inline int Normalize(long long &_val){
         if(_val < 0)    _val = _val % mod + mod;
@@ -123,10 +124,10 @@ struct Modular {
     }
 	
     inline friend istream& operator >> (istream& stream, Modular& m) {
-       long long x; stream >> x; m.val = m.Normalize(x);
-       return stream;
+	long long x; stream >> x; m.val = m.Normalize(x);
+	return stream;
     }
-	inline friend ostream& operator << (ostream& stream, const Modular& m) {
+    inline friend ostream& operator << (ostream& stream, const Modular& m) {
         return stream << m.val;
     }
 };
