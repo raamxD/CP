@@ -7,12 +7,14 @@ struct Modular {
    
     int val; 
     
-    Modular(){}
+    Modular(){
+        val=0;
+    }
     Modular(long long _val){
-	val = Normalize(_val);
+	    val = Normalize(_val);
     }
     Modular(int _val){
-	val = Normalize(_val);
+	    val = Normalize(_val);
     }
     inline int Normalize(long long &_val){
         if(_val < 0)    _val = _val % mod + mod;
