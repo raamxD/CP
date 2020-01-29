@@ -1,7 +1,7 @@
 /*
         Source to study     -   https://en.wikipedia.org/wiki/Stirling_numbers_of_the_first_kind
         
-        O(nlogn^2) approach to find coefficients of polynomial
+        O(nlog^2n) approach to find coefficients of polynomial
             1. [x * (x-1) * (x-2) * ... * (x-r)]
             2. [x * (x+1) * (x+2) * ... * (x+r)]
         
@@ -112,7 +112,7 @@ vector<ll> GetStirling(int r){
             if(j+i>=r)break;
 
             // multiply poly[j] and poly[j+i] and store result in poly[j]
-            // if use, change Convolute accordingly and comment below lines.
+            // To use below line, change Convolute accordingly and comment below lines.
             // NTT.Convolute(poly[j],poly[j+i]); 
             
             int sj=sz(poly[j]),sji=sz(poly[j+i]),n=1;int s=sj+sji-1;
