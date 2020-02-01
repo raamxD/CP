@@ -84,7 +84,7 @@ struct ntt{
 // O(nlog^2n) recursive approach
 // Coefficients of polynomial           [x * (x-1) * (x-2) * ....* (x-r)]
 // If want coefficients of polynomial   [x * (x+1) * (x+2) * ....* (x+r)]
-// change line 1 to return {l,1};
+// change line 1 of GetStirling to return {l,1};
  
 vector<ll> GetStirling(int l,int r){
      if(l==r)return{-l,1};
@@ -97,7 +97,7 @@ vector<ll> GetStirling(int l,int r){
 // O(nlog^2n) iterative approach returns
 // Coefficients of polynomial           [x * (x-1) * (x-2) * ....* (x-(r-1))]
 // If want coefficients of polynomial   [x * (x+1) * (x+2) * ....* (x+(r+1))]
-// change line 1 to poly[i] = {i,1};
+// change line 1 of GetStirling to poly[i] = {i,1};
     
 vector<ll> poly[100005];
 vector<ll> GetStirling(int r){
@@ -112,7 +112,7 @@ vector<ll> GetStirling(int r){
             if(j+i>=r)break;
 
             // multiply poly[j] and poly[j+i] and store result in poly[j]
-            // To use below line, change Convolute accordingly and comment below lines.
+            // To use next line, change Convolute accordingly and comment down below lines.
             // NTT.Convolute(poly[j],poly[j+i]); 
             
             int sj=sz(poly[j]),sji=sz(poly[j+i]),n=1;int s=sj+sji-1;
