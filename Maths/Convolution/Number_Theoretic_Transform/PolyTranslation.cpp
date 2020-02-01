@@ -1,12 +1,13 @@
 /*
-	POLYNOMIAL TRANSLATION	: Given coefficients of P(x) of degree N, 
-							  we need to find coeffcients of P(x+t).
-							  
-	TIME COMPLEXITY			: O(nlogn) where n is degree of given polynomial 
+ *	POLYNOMIAL TRANSLATION	:	Given coefficients of P(x) of degree n, we
+								need to find coeffcients of P(x+t).
+					 			All calculations are under NTT friendly mod.
+					 
+ *	TIME COMPLEXITY			: 	O(nlogn) where n is degree of given polynomial 
 	
-	SOURCE TO STUDY			: https://discuss.codechef.com/t/binofev-editorial/48481
-	________________________________________________________________
-
+ *	SOURCE TO STUDY			: 	1.	https://discuss.codechef.com/t/binofev-editorial/48481
+								2.	https://discuss.codechef.com/t/chefknn-editorial/18179
+____________________________________________________________________________________________
 
 	Let,
 			n
@@ -17,7 +18,7 @@
 	P(x+t) = SUM a_i*(x+t)^i
 			 i=0
 				 
-	But,
+	But by binomial expansion,
 				  k=i
 		(x+t)^i = SUM [iCk * (t)^(i-k) * (x)^k]
 				  k=0
@@ -34,7 +35,6 @@
 	|								 i=0 k=i						|
 	+---------------------------------------------------------------+																
 				 
-				 
 	which is same as,
 	 
 		 n
@@ -45,14 +45,14 @@
 			   k=i 
 	
 				n							
-		P(x) = SUM [a_(n-i) * (n-i)!] x^i
+		M(x) = SUM [a_(n-i) * (n-i)!] x^i
 			   i=0
 				 
 				n							
-		Q(x) = SUM [t^i / i!] x^i
+		N(x) = SUM [t^i / i!] x^i
 			   i=0
 						  
-		R(x) = P(x).Q(x)  and 
+		R(x) = M(x).N(x)  and 
 		
 		coeffcient of x^i in R(x) is be r_i, then
 
@@ -64,7 +64,7 @@
 
 
 	Therefore,
-		found polynomial R(x) = P(x).Q(x)
+		found polynomial R(x) = M(x).N(x)
 	
 	+---------------------------------------------------+
 	|			n                         				|
@@ -72,16 +72,16 @@
 	|		   i=0					    				|
 	+---------------------------------------------------+																
 	where,
-			n							
-	P(x) = SUM [a_(n-i) * (n-i)!] x^i
-		   i=0
-	and
-			n							
-	Q(x) = SUM [t^i / i!] x^i
-		   i=0
-
+	+-----------------------------------+
+	|		  n							|
+	| M(x) = SUM [a_(n-i) * (n-i)!] x^i	|
+	|		 i=0						|
+	+-----------------------------------+		 
+	|		  n							|
+	| N(x) = SUM [t^i / i!] x^i			|
+	|	     i=0						|
+	+-----------------------------------+
 ______________________________________________________________________________________________
-
 
 */
 
@@ -291,44 +291,32 @@ struct ntt{
     }	
 }NTT;
 
+/// Polynomial Translation Stuff
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 vm polyTranslation(vm &poly, mint t){
     int n = sz(poly);
-    vm P(n),Q(n),res(n); 
+    vm M(n),N(n),res(n); 
     mint powt=1;
     for(int i=0;i<n;i++){
-        P[i] = poly[n-1-i] * fc[n-1-i];
-        Q[i] = powt * _fc[i];
+        M[i] = poly[n-1-i] * fc[n-1-i];
+        N[i] = powt * _fc[i];
         //Q[i] = t.modpow(i) * _fc[i];
         powt *= t;
     }
-    vm R = NTT.Convolute(P,Q);
+    vm R = NTT.Convolute(M,N);
     for(int i=0;i<n;i++){
         res[i] = R[n-1-i] * _fc[i];
     }
     return res;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
 int main(){
     PreCalFact(1e5);
 
-    //vm a = {1,2};
-    //vm b = polyTranslation(a,1);
-    //for(auto z : b)
-        //cout << z << " ";
-    
-    vm a = {1,2,49,-7,6};
-	
-    vm b = polyTranslation(a,17);
+    vm a = {1,2};
+    vm b = polyTranslation(a,1);
     for(auto z : b)
-        cout << z << " "; cout << "\n";
-        
-    b = polyTranslation(a,-12);
-    for(auto z : b)
-        cout << z << " "; cout << "\n";
-        
-    b = polyTranslation(a,69);
-    for(auto z : b)
-        cout << z << " "; cout << "\n";
+        cout << z << " ";
 }
