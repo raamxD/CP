@@ -313,8 +313,8 @@ vm polyTranslation(vm &poly, mint t){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 int main(){
-    PreCalFact(1e5);
-
+    
+	PreCalFact(1e5);
     vm a = {1,2};
     vm b = polyTranslation(a,1);
     for(auto z : b)
