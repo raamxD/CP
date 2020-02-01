@@ -10,7 +10,7 @@
         For r > 10^5 use O(nlogn) approach using polynomial translation.
 
         Note : 1. Coefficients are calculated under NTT friendly modulus.
-               2. You can make it faster by making it compatible Mint class (NTTwithMint.cpp).
+               2. You can make it make it compatible with Mint class (NTTwithMint.cpp).
 */
 
 using namespace std;
