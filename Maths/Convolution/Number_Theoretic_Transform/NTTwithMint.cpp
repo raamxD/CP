@@ -159,7 +159,7 @@ struct ntt{
         root[N/2]=1;root[N/2+1]=((mint)G).modpow((mod-1)/N);
         for(int i=N/2+2;i<N;++i)root[i]=root[i-1]*root[N/2+1];
         for(int i=N/2;--i;)root[i]=root[2*i];
-        for(int i=1;i<=20;i++)_pow2[1<<i]=((mint)(1<<i)).modinv();
+        for(int i=0;i<=20;i++)_pow2[1<<i]=((mint)(1<<i)).modinv();
     }
     vm Convolute(vm &a, vm &b){
         int s=sz(a)+sz(b)-1,n=1;while(n<s)n*=2;
