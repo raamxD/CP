@@ -135,14 +135,15 @@ struct Modular {
 };
 
 #define mint Modular<mod> 
+#define vm   vector<mint>
 
 /// Combinatorics Stuff
 ///////////////////////////////////////////////////////////////////////////
 
-const int mxF = mxN;
-mint fc[mxF],_fc[mxF];
+const int mxF = (1<<20);
+mint fc[mxF+1],_fc[mxF+1];
 
-void PreCalFact(int N){
+inline void PreCalFact(int N = mxF){
     fc[0]=1;for(int i=1;i<=N;i++) fc[i] = i * fc[i-1];
     _fc[N] = fc[N].modinv();
     for(int i=N-1;i>=0;--i) _fc[i] = (i+1) * _fc[i+1];

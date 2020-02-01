@@ -122,6 +122,7 @@ struct Modular {
     inline friend bool operator <= (const Modular& a, const Modular& b) { return a.val <= b.val; }
 };
 
-#define mint Modular<mod> 
+#define mint Modular<mod>
+#define vm   vector<mint>
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
