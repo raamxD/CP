@@ -17,7 +17,7 @@ int Anc[mxN][lgN];	//memset(Anc,-1,sizeof(Anc));
 void dfs(int u, int p=-1){
 	Dep[u] = (p!=-1? 1+Dep[p]:0);
 	Anc[u][0] = p;
-	for(int i=0; i<lgN; ++i)
+	for(int i=1; i<lgN; ++i)
         if(Anc[u][i-1]!=-1)
             Anc[u][i] = Anc[Anc[u][i-1]][i-1];
     for(int v:Adj[u]){
@@ -26,11 +26,11 @@ void dfs(int u, int p=-1){
 }
 int getLCA(int u, int v){
 	if(Dep[u] < Dep[v]) swap(u,v);
-    for(int i=lgN-1; i>=0; --i)
+    for(int i=lgN-1; ~i; --i)
         if(Anc[u][i]+1 && Dep[Anc[u][i]]>=Dep[v])
             u = Anc[u][i];
     if(u==v) return u;
-    for(int i=lgN-1; i>=0; --i)
+    for(int i=lgN-1; ~i; --i)
         if(Anc[u][i]!=Anc[v][i])
             u=Anc[u][i], v=Anc[v][i];
     return Anc[u][0];
