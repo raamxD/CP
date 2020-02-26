@@ -3,3 +3,6 @@ root = true
 [*.cpp]
 indent_style = tab
 tab_width = 4
+[*.txt]
+indent_style = tab
+tab_width = 4
