@@ -47,7 +47,7 @@ The function sum works as follows:
 
 The function increase works with the same analogy, but "jumps" in the direction of increasing indices:
 
-1. sums of the ranges [g(j);j] that satisfy the condition g(j)≤i≤j are increased by val , that is T[j] += val. 
+1. sums of the ranges [g(j);j] that satisfy the condition g(j) ≤ i ≤ j are increased by val , that is T[j] += val. 
 2. Therefore we updated all elements in T that corresponds to ranges in with A[i] lies.
 
 IMPORTANT NOTE : 
@@ -56,6 +56,61 @@ as 0 ≤ g(i) ≤ i , if g(i) = 0 for each i, then T[i] will be representing pre
 and if g(i) = i for each i, then T[i] will be representing A[i]. Both are O(N) operations in worst case but Fenwick found 
 defintion of g(i) such that both queries can be answered in O(logn) worst case.
 
+///////////////////////////////////////////////////////////////
+
+Definition of g(i) for Zero Based Indexing BIT :
+
+The computation of g(i) is defined using the following simple operation: 
+we replace all trailing 1 bits in the binary representation of i with 0 bits.
+
+In other words, if the least significant digit of i in binary is 0, then g(i)=i. And otherwise the least 
+significant digit is a 1, and we take this 1 and all other trailing 1s and flip them.
+
+For instance we get
+
+g(11) = g(1011) = 1000 = 8
+g(12) = g(1100) = 1100 = 12
+g(13) = g(1101) = 1100 = 12
+g(14) = g(1110) = 1110 = 14
+g(15) = g(1111) = 0000 = 0
+	
+	
+There exists a simple implementation using bitwise operations for the non-trivial operation described above:
+g(i)=i & (i+1),
+	+-----------------------+
+	|	g(i) = i & (i + 1)	|
+	+-----------------------+
+where & is the bitwise AND operator.
+
+Now, we just need to find a way to iterate over all j's, such that g(j) ≤ i ≤ j.
+
+It is easy to see that we can find all such j's by starting with i and flipping the last unset bit. 
+We will call this operation h(j). For example, for i=10 we have:
+10 = 0001010
+h(10) = 11 = 0001011
+h(11) = 15 = 0001111
+h(15) = 31 = 0011111
+h(31) = 63 = 0111111
+:	:	:		:
+
+Unsurprisingly, there also exists a simple way to perform h(i) using bitwise operations:
+	+-----------------------+
+	|	h(j) = j | (j + 1)	|
+	+-----------------------+
+where | is the bitwise OR operator.
+	
+// Get Sum from A[0] + A[1] + . . . + A[idx-1]
+int Sum(int idx){
+	int ret = 0;
+	for (idx; idx >= 0; idx=(idx & (idx + 1))-1)
+		ret += bit[idx];
+	return ret;
+}
+// Increment A[i] with value 'val'
+void Upd(int idx, int delta){
+	for (idx; idx < n; idx |= idx + 1)
+	bit[idx] += delta;
+}
 ///////////////////////////////////////////////////////////////
 
 Definition of g(i) for One Based Indexing BIT :
@@ -102,62 +157,4 @@ void Upd(int idx, int delta){
 	for (++idx; idx < n; idx += idx & -idx)
 	bit[idx] += delta;
 }
-
-
-///////////////////////////////////////////////////////////////
-
-Definition of g(i) for Zero Based Indexing BIT :
-
-The computation of g(i) is defined using the following simple operation: 
-we replace all trailing 1 bits in the binary representation of i with 0 bits.
-
-In other words, if the least significant digit of i in binary is 0, then g(i)=i. And otherwise the least 
-significant digit is a 1, and we take this 1 and all other trailing 1s and flip them.
-
-For instance we get
-
-g(11) = g(1011) = 1000 = 8
-g(12) = g(1100) = 1100 = 12
-g(13) = g(1101) = 1100 = 12
-g(14) = g(1110) = 1110 = 14
-g(15) = g(1111) = 0000 = 0
-	
-	
-There exists a simple implementation using bitwise operations for the non-trivial operation described above:
-g(i)=i & (i+1),
-	+-----------------------+
-	|	g(i) = i & (i + 1)	|
-	+-----------------------+
-where & is the bitwise AND operator.
-
-Now, we just need to find a way to iterate over all j's, such that g(j)≤i≤j.
-
-It is easy to see that we can find all such j's by starting with i and flipping the last unset bit. 
-We will call this operation h(j). For example, for i=10 we have:
-10 = 0001010
-h(10) = 11 = 0001011
-h(11) = 15 = 0001111
-h(15) = 31 = 0011111
-h(31) = 63 = 0111111
-:	:	:		:
-
-Unsurprisingly, there also exists a simple way to perform h(i) using bitwise operations:
-	+-----------------------+
-	|	h(j) = j | (j + 1)	|
-	+-----------------------+
-where | is the bitwise OR operator.
-	
-// Get Sum from A[0] + A[1] + . . . + A[idx-1]
-int Sum(int idx){
-	int ret = 0;
-	for (idx; idx >= 0; idx=(idx & (idx + 1))-1)
-		ret += bit[idx];
-	return ret;
-}
-// Increment A[i] with value 'val'
-void Upd(int idx, int delta){
-	for (idx; idx < n; idx |= idx + 1)
-	bit[idx] += delta;
-}
-
 ///////////////////////////////////////////////////////////////									
