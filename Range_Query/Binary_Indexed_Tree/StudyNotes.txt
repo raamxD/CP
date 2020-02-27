@@ -1,10 +1,67 @@
+Nice Source to study - https://cp-algorithms.com/data_structures/fenwick.html
+
+///BINARY INDEXED TREE
+
+Given an array 'A' of 'n' elements, we have to answer 2 types of queries:
+
+1. SumQuery(l,r) :	get sum of elements (A[l] + A[l+1] + .... + A[r]) 
+
+2. Update(x,val) :	assign element at position 'x' (0 ≤ x ≤ n-1) with 'val'.
+											or
+					increment element at position 'x' (0 ≤ x ≤ n-1) by 'val'.
 
 
+A Fenwick tree is just an array T[0 . . . . n−1], where each of it's element stores
+the sum of some range of array 'A'. 
+
+	+-----------------------+
+	|			i			|
+	|	T[i] = SUM	A[j]	|
+	|		  j=g(i)		|	
+	+-----------------------+
+
+where g(i) is some function that statisfies 0 ≤ g(i) ≤ i. This function can basically
+evaluate the indexes at which the sum of some definite range is stored. This such indices will
+altogether sum up to needed required range.
+
+Working of BIT can be understood by below pseudocode :
+
+// Get Sum from A[0] + A[1] + . . . + A[i]
+def SUM(int i) : 
+	res = 0;
+	while(i >= 0):
+		res += T[i];
+		i = g(i) - 1;
+	return res;
+
+// Increment A[i] with value 'val'
+def Upd(int i, in val) : 
+	for all j with g(j) ≤ i ≤ j:
+		T[j] += val;
+
+The function sum works as follows:
+
+1. first, it adds the sum of the range [g(i);i] (i.e. T[i]) to the result
+2. then, it "jumps" to the range [g(g(i)−1);g(i)−1], and adds this range's sum to the result
+3. and so on, until it "jumps" from [0;g(g(…g(i)−1⋯−1)−1)] to [g(−1);−1]; that is where the sum function stops jumping.
+
+The function increase works with the same analogy, but "jumps" in the direction of increasing indices:
+
+1. sums of the ranges [g(j);j] that satisfy the condition g(j)≤i≤j are increased by val , that is T[j] += val. 
+2. Therefore we updated all elements in T that corresponds to ranges in with A[i] lies.
+
+IMPORTANT NOTE : 
+
+as 0 ≤ g(i) ≤ i , if g(i) = 0 for each i, then T[i] will be representing prefix sum of Array 'A' upto index 'i'
+and if g(i) = i for each i, then T[i] will be representing A[i]. Both are O(N) operations in worst case but Fenwick found 
+defintion of g(i) such that both queries can be answered in O(logn) worst case.
+
+///////////////////////////////////////////////////////////////
+
+Definition of g(i) for One Based Indexing BIT :
 
 
-
-														FENWICK	TREE
-
+														FENWICK	TREE FOR ONE BASED INDEXING
 
 						+-------------------------------------------------------------------------------+
 						[	1	][	2	][	3	][	4	][	5	][	6	][	7	][	8	][	9	][	10	]
@@ -14,9 +71,93 @@
 						O------------------------------->								 O------------------------------->
 						O--------------------------------------------------------------->
 						
-										
-										
-										
-										
-										
-										
+The computation of g(i) is defined as: toggling of the last set 1 bit in the binary representation of i.
+
+g(7) = g(111) = 110 = 6
+g(6) = g(110) = 100 = 4
+g(4) = g(100) = 000 = 0
+
+The last set bit can be extracted using i & (−i), so the operation can be expressed as:
+
+	+-----------------------+
+	|	g(i) = i−(i &(−i))	|
+	+-----------------------+
+
+And it's not hard to see, that you need to change all values T[j] in the sequence i, h(i), h(h(i)), … 
+when you want to update A[j], where h(i) is defined as:
+
+	+-----------------------+
+	|	h(i) = i+(i &(−i))	|
+	+-----------------------+
+
+// Get Sum from A[0] + A[1] + . . . + A[idx-1]
+int Sum(int idx){
+	int ret = 0;
+	for (++idx; idx > 0; idx -= idx & -idx)
+		ret += bit[idx];
+	return ret;
+}
+// Increment A[i] with value 'val'
+void Upd(int idx, int delta){
+	for (++idx; idx < n; idx += idx & -idx)
+	bit[idx] += delta;
+}
+
+
+///////////////////////////////////////////////////////////////
+
+Definition of g(i) for Zero Based Indexing BIT :
+
+The computation of g(i) is defined using the following simple operation: 
+we replace all trailing 1 bits in the binary representation of i with 0 bits.
+
+In other words, if the least significant digit of i in binary is 0, then g(i)=i. And otherwise the least 
+significant digit is a 1, and we take this 1 and all other trailing 1s and flip them.
+
+For instance we get
+
+g(11) = g(1011) = 1000 = 8
+g(12) = g(1100) = 1100 = 12
+g(13) = g(1101) = 1100 = 12
+g(14) = g(1110) = 1110 = 14
+g(15) = g(1111) = 0000 = 0
+	
+	
+There exists a simple implementation using bitwise operations for the non-trivial operation described above:
+g(i)=i & (i+1),
+	+-----------------------+
+	|	g(i) = i & (i + 1)	|
+	+-----------------------+
+where & is the bitwise AND operator.
+
+Now, we just need to find a way to iterate over all j's, such that g(j)≤i≤j.
+
+It is easy to see that we can find all such j's by starting with i and flipping the last unset bit. 
+We will call this operation h(j). For example, for i=10 we have:
+10 = 0001010
+h(10) = 11 = 0001011
+h(11) = 15 = 0001111
+h(15) = 31 = 0011111
+h(31) = 63 = 0111111
+:	:	:		:
+
+Unsurprisingly, there also exists a simple way to perform h(i) using bitwise operations:
+	+-----------------------+
+	|	h(j) = j | (j + 1)	|
+	+-----------------------+
+where | is the bitwise OR operator.
+	
+// Get Sum from A[0] + A[1] + . . . + A[idx-1]
+int Sum(int idx){
+	int ret = 0;
+	for (idx; idx >= 0; idx=(idx & (idx + 1))-1)
+		ret += bit[idx];
+	return ret;
+}
+// Increment A[i] with value 'val'
+void Upd(int idx, int delta){
+	for (idx; idx < n; idx |= idx + 1)
+	bit[idx] += delta;
+}
+
+///////////////////////////////////////////////////////////////									

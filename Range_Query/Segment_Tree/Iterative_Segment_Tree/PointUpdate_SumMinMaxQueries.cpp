@@ -1,10 +1,13 @@
 using namespace std;
-#include <bits/stdc++.h>+
+#include <bits/stdc++.h>
+typedef long long ll; 
 
+// pass 't' as {-1,0,1} for {min,sum,max} segtree
+// Update Queries are value assignment. Can be converted to increment queries. 
 struct SegTree{
-	typedef long long ll; 
-	vector<ll> S; ll n,tt; 
-	// pass 't' as {-1,0,1} for {min,sum,max} segtree
+	
+	ll n,tt; vector<ll> S;  
+	
 	SegTree(vector<ll> arr,int t){   
 		n=arr.size(); S.assign(2*n,0); tt=-1e18*t;
 		for(int i=0;i<n;i++)  S[n+i]=arr[i];
