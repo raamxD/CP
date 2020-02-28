@@ -36,7 +36,8 @@ struct BIT2D{
 	}
 	ll Kqry(int r1, int c1, int r2, int c2){
 		/*get sum of submatrix with top left corner as (r1,c1)
-		and bottom right corner as (r2,c2)*/
+		and bottom right corner as (r2,c2). If not valid values, we'll swap them.*/
+		if(r1 > r2 || c1 > c2) {swap(r1,r2); swap(c1,c2);}
 		return (Kqry(r2,c2)+Kqry(r1-1,c1-1)-Kqry(r2,c1-1)-Kqry(r1-1,c2));
 	}
 	void Updt(int r1, int c1, int val){
