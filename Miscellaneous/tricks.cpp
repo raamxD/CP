@@ -1,10 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#define  inf  1061109567
-#define _inf -1061109568
-
-
 struct state{
     int a,b,c;
     pair<int,double> p;
@@ -22,17 +18,30 @@ int main(){
      * memset(structure, val, sizeof(structure))
      * Initializing with memset()
      */
+        
+        //for 32 bit value
+        
+        const int  inf = 0x3f3f3f3f; 
+        const int _inf = 0xc0c0c0c0;
 
-    
-        int ar[3]; 
+        int arr1[100]; 
+
+        memset(arr1,  0,   sizeof(arr1));    
+        memset(arr1, -1,   sizeof(arr1));     
+        memset(arr1, 0x3f, sizeof(arr1));   // arr1[i] =  inf;
+        memset(arr1, 0xc0, sizeof(arr1));   // arr1[i] = _inf;
+
+         //for 64 bit value
         
-        memset(ar,  0, sizeof(ar));     //   0
-        memset(ar, -1, sizeof(ar));     //  -1
-        memset(ar, 0x3f, sizeof(ar));   //  1061109567 > 1e9     inf
-        memset(ar, 0xc0, sizeof(ar));   // -1061109568 < -1e9   _inf
-        
-        cout << ar[2] << "\n";
-    
+        const long long  Inf = 0x3f3f3f3f3f3f3f3f; 
+        const long long _Inf = 0xc0c0c0c0c0c0c0c0;
+
+        long long arr2[100]; 
+
+        memset(arr2,  0,     sizeof(arr2));    
+        memset(arr2, -1,     sizeof(arr2));     
+        memset(arr2, 0x3f3f, sizeof(arr2));   // arr2[i] =  INF
+        memset(arr2, 0xc0c0, sizeof(arr2));   // arr2[i] = _INF
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 
