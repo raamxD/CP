@@ -4,6 +4,7 @@
  *        in string 't'.
  *  Time Complexity : O(|s| + |t|)
  */
+
 #define _GLIBCXX_DEBUG
 #include<bits/stdc++.h>
 using namespace std;
@@ -46,8 +47,8 @@ int main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    string t = "abcdfbcdef";
-    string s = "bcd";
+    string t = "aaaaa";
+    string s = "aa";
 
     RabinKarp RK(100);
     vector<int> occ = RK.getCount(s,t);
