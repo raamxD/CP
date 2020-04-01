@@ -1,20 +1,20 @@
 /*
-	Refer :  https://codeforces.com/blog/entry/45223
+   Refer :  https://codeforces.com/blog/entry/45223
             https://www.geeksforgeeks.org/sum-subsets-dynamic-programming/
-	Problem Statement :  Given a fixed array A of 2^N integers, we need to calculate ∀ x function 
+   Problem Statement :  Given a fixed array A of 2^N integers, we need to calculate ∀ x function 
                         F(x) = Sum of all A[i] such that x&i = i, i.e., i is a subset of x. 
 */
 
 /*
- *  	Let dp[mask][i] represents set of only subset of mask which differ from mask only in first 'i'
- *  	bits. (zero based)
+ *    Let dp[mask][i] represents set of only subset of mask which differ from mask only in first 'i'
+ *    bits. (zero based)
  *
- *  	Now, transition for given mask while moving from i'th state to (i+1)'th
+ *    Now, transition for given mask while moving from i'th state to (i+1)'th
  *                      
- *    	                ------>  dp[mask][i]                          , if (i+1)'th bit of mask is on.
- *  	dp[mask][i + 1] =  |    
- *       	             |
- *          	          ------>  dp[mask][i] + dp[mask^(1<<(i+1))][i] , if (i+1)'th bit of mask is off.
+ *                       ------>  dp[mask][i]                          , if (i+1)'th bit of mask is on.
+ *    dp[mask][i + 1] =  |    
+ *                       |
+ *                       ------>  dp[mask][i] + dp[mask^(1<<(i+1))][i] , if (i+1)'th bit of mask is off.
  *
 */
 
@@ -76,14 +76,14 @@ int main(){
 
 /*
 INPUT : 
-	4
-	7 12 14 16
+   4
+   7 12 14 16
 OUTPUT :
-	7 19 21 49
-Explanation	: 	There will be 4 values of x: 0,1,2,3
-					So, we need to calculate F(0),F(1),F(2),F(3).
-	F(0) = A0 = 7 
-	F(1) = A0 + A1 = 19
-	F(2) = A0 + A2 = 21
-	F(3) = A0 + A1 + A2 + A3 = 49
+   7 19 21 49
+Explanation :  There will be 4 values of x: 0,1,2,3
+               So, we need to calculate F(0),F(1),F(2),F(3).
+   F(0) = A0 = 7 
+   F(1) = A0 + A1 = 19
+   F(2) = A0 + A2 = 21
+   F(3) = A0 + A1 + A2 + A3 = 49
 */
