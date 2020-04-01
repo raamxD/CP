@@ -1,20 +1,8 @@
-/** 
- * @author  : raam
- * @created : Mar 30, 2020 - 7.20.01 PM IST
- *
- * असाध्य ते साध्य करिता सायास । कारण अभ्यास तुका म्हणे 
- *                                              - संत तुकाराम
- *
- * IMPOSSIBLE BECOMES POSSIBLE IF YOU TAKE EFFORTS.
- * PRACTICE  OVER  AND  OVER  TILL YOU  ACHIEVE IT.
- *                                              - SANT TUKARAM
- */
- 
 /*
-    Yet Another Substring Reverse
+	Yet Another Substring Reverse
 
-    Problem Code        :   https://codeforces.com/contest/1234/problem/F
-    Problem Analysis    :   https://codeforces.com/blog/entry/70233 
+   Problem Code       :  https://codeforces.com/contest/1234/problem/F
+   Problem Analysis   :  https://codeforces.com/blog/entry/70233 
     
 */
 
@@ -29,36 +17,39 @@ int dp[mxN];
 
 void solve(){
 
-    string s;
-    cin >> s;
+   string s;
+   cin >> s;
     
-    for(int i = 0; i < (int) s.size(); ++i){
-        int mask = 0;
-        for(int j = 0; j < 20 && j + i < (int) s.size(); ++j){
-            int pos = (1 << (s[i + j] - 'a'));
-            if(mask & pos) break;
-            mask ^= pos;
-            dp[mask] = __builtin_popcount(mask);
-        }
+   for(int i = 0; i < (int) s.size(); ++i){
+      int mask = 0;
+      for(int j = 0; j < 20 && j + i < (int) s.size(); ++j){
+         int pos = (1 << (s[i + j] - 'a'));
+         if(mask & pos){
+				break;
+			};
+         mask ^= pos;
+         dp[mask] = __builtin_popcount(mask);
+      }
     }
-    for(int mask = 0; mask < mxN; ++mask){
-        for(int i = 0; i < lgN; ++i){
-            if(mask & (1 << i))
-                dp[mask] = max(dp[mask], dp[(mask ^ (1 << i))]);
-        }
+   for(int mask = 0; mask < mxN; ++mask){
+      for(int i = 0; i < lgN; ++i){
+         if(mask & (1 << i)){
+				dp[mask] = max(dp[mask], dp[(mask ^ (1 << i))]);
+         }   
+		}
     }
-    int ans = INT_MIN;
-    for(int i = 0; i < mxN; ++i){
-        ans = max(ans, dp[i] + dp[~i & ((1 << lgN) - 1)]);
-    }
-    cout << ans;
+   int ans = INT_MIN;
+   for(int i = 0; i < mxN; ++i){
+      ans = max(ans, dp[i] + dp[~i & ((1 << lgN) - 1)]);
+   }
+   cout << ans;
 }
 
 int main(){
        
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
 
-    int t; t=1;
-    while(t--)solve();
+   int t; t=1;
+   while(t--)solve();
 }

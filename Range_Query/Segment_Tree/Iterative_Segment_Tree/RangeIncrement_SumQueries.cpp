@@ -2,54 +2,53 @@ using namespace std;
 #include <bits/stdc++.h>
 
 struct SegLzy{
-    typedef long long ll;
-    #define _  j*2
-    #define __ j*2+1
+	#define _  j*2
+	#define __ j*2+1
 
-    vector<ll> S,L; int n,h;
+	vector<ll> S,L; int n,h;
 
-    SegLzy(vector<int> ar){
-        n=ar.size(); h=32-__builtin_clz(n);
-        S.assign(2*n,0); L.assign(n,0);
-        for(int i=0;i<n;i++)S[n+i]=ar[i];
-        for(int j=n-1;j>0;j--)S[j]=S[_]+S[__];  
-    }
-    inline void Push(int l,int r) {
-        ll s=h,k=1<<(h-1);
-        for(l+=n,r+=n-1;s>0;--s,k/=2){
-            for(int j=l>>s;j<=r>>s;++j)if(L[j]){
-                S[_] +=L[j]*k;if(_ <n)L[_] +=L[j];
-                S[__]+=L[j]*k;if(__<n)L[__]+=L[j];
-                L[j] = 0;
-            }
-        }      
-    }
-    void Updt(int l,int r,int v){
-        ll s=l+n,e=r-1+n,k=1,j,c;
-        for(l+=n,r+=n;l<r;l/=2,r/=2,k*=2) {
-            if(l&1){S[l]+=v*k;if(l<n)L[l]+=v;l++;}
-            if(r&1){--r;S[r]+=v*k;if(r<n)L[r]+=v;}
-        }
-        j=s;c=1;while((j/=2)>0)c*=2,S[j]=S[_]+S[__]+L[j]*c;
-        j=e;c=1;while((j/=2)>0)c*=2,S[j]=S[_]+S[__]+L[j]*c;
-    }
-    long long Kqry(int l,int r,ll res=0){
-        Push(l,l+1);Push(r-1,r);
-        for(l+=n,r+=n;l<r;l/=2,r/=2){
-            if(l&1)res+=S[l++];
-            if(r&1)res+=S[--r];
-        }return res;
-    }
+	SegLzy(vector<int> ar){
+		n=ar.size(); h=32-__builtin_clz(n);
+		S.assign(2*n,0); L.assign(n,0);
+		for(int i=0;i<n;i++)S[n+i]=ar[i];
+		for(int j=n-1;j>0;j--)S[j]=S[_]+S[__];  
+	}
+	inline void Push(int l,int r) {
+		ll s=h,k=1<<(h-1);
+		for(l+=n,r+=n-1;s>0;--s,k/=2){
+			for(int j=l>>s;j<=r>>s;++j)if(L[j]){
+				S[_] +=L[j]*k;if(_ <n)L[_] +=L[j];
+				S[__]+=L[j]*k;if(__<n)L[__]+=L[j];
+				L[j] = 0;
+			}
+		}      
+	}
+	void Updt(int l,int r,int v){
+		ll s=l+n,e=r-1+n,k=1,j,c;
+		for(l+=n,r+=n;l<r;l/=2,r/=2,k*=2) {
+			if(l&1){S[l]+=v*k;if(l<n)L[l]+=v;l++;}
+			if(r&1){--r;S[r]+=v*k;if(r<n)L[r]+=v;}
+		}
+		j=s;c=1;while((j/=2)>0)c*=2,S[j]=S[_]+S[__]+L[j]*c;
+		j=e;c=1;while((j/=2)>0)c*=2,S[j]=S[_]+S[__]+L[j]*c;
+	}
+	long long Kqry(int l,int r,ll res=0){
+		Push(l,l+1);Push(r-1,r);
+		for(l+=n,r+=n;l<r;l/=2,r/=2){
+			if(l&1)res+=S[l++];
+			if(r&1)res+=S[--r];
+		}return res;
+	}
 };
 
 int main(){
-    vector<int> a = {1,2,3,4,5,6,7,8,9,10};
-    SegLzy S1(a);
-    cout << S1.Kqry(0,10) << endl;
-    S1.Updt(3,7,10);
-    cout << S1.Kqry(3,7) << endl;
-    S1.Updt(3,7,-10);
-    cout << S1.Kqry(3,7) << endl;
+	vector<int> a = {1,2,3,4,5,6,7,8,9,10};
+	SegLzy S1(a);
+	cout << S1.Kqry(0,10) << endl;
+	S1.Updt(3,7,10);
+	cout << S1.Kqry(3,7) << endl;
+	S1.Updt(3,7,-10);
+	cout << S1.Kqry(3,7) << endl;
 }
 
 //------------------------------------------------------------------------

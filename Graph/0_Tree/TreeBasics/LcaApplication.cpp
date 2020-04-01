@@ -12,36 +12,45 @@ int Dep[mxN];
 int Anc[mxN][lgN];	//memset(Anc,-1,sizeof(Anc));
 
 void dfs(int u, int p=-1){
-	Dep[u] = (p!=-1? 1+Dep[p]:0);
+	Dep[u] = (p != -1 ? 1 + Dep[p] : 0);
 	Anc[u][0] = p;
-	for(int i=1; i<lgN; ++i)
-        if(Anc[u][i-1]!=-1)
-            Anc[u][i] = Anc[Anc[u][i-1]][i-1];
-    for(int v:Adj[u]){
-    	if(v!=p) dfs(v,u);
-    }
+	for(int i = 1; i < lgN; ++i){
+		if(Anc[u][i-1] != -1){
+			Anc[u][i] = Anc[Anc[u][i-1]][i-1];
+		}
+	}
+   for(int v : Adj[u]){
+		if(v != p) dfs(v,u);
+   }
 }
 int getLCA(int u, int v){
 	if(Dep[u] < Dep[v]) swap(u,v);
-    for(int i=lgN-1; ~i; --i)
-        if(Anc[u][i]+1 && Dep[Anc[u][i]]>=Dep[v])
-            u = Anc[u][i];
-    if(u==v) return u;
-    for(int i=lgN-1; ~i; --i)
-        if(Anc[u][i]!=Anc[v][i])
-            u=Anc[u][i], v=Anc[v][i];
-    return Anc[u][0];
+   for(int i = lgN - 1; ~i; --i){
+		if(Anc[u][i] + 1 && Dep[Anc[u][i]] >= Dep[v]){
+			u = Anc[u][i];
+		}
+	}
+   if(u == v){
+		return u;
+	}
+	for(int i = lgN - 1; ~i; --i){
+		if(Anc[u][i] != Anc[v][i]){
+			u = Anc[u][i], v = Anc[v][i];
+		}
+	}
+	return Anc[u][0];
 }
 
 //////////////////////////////////////////////////////////////////
 /// Returns K'th Ancestor of node if present else -1 
 
 int getKthAnc(int u, int k){
-	for(int i=0; i<lgN; ++i){
-		if((1<<i)&k){
+	for(int i = 0; i < lgN; ++i){
+		if((1 << i) & k){
 			u = Anc[u][i];
-			if(u==-1)
+			if(u == -1){
 				break;
+			}
 		}
 	}
 	return u;
@@ -52,7 +61,7 @@ int getKthAnc(int u, int k){
 
 int getDist(int u, int v){
 	int l = getLCA(u,v);
-	return (Dep[u]+Dep[v]-2*Dep[l]);
+	return (Dep[u] + Dep[v] - 2 * Dep[l]);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -60,7 +69,7 @@ int getDist(int u, int v){
 int main() {
 	int n;
 	cin >> n;
-	for(int i = 0; i < n-1; i++){
+	for(int i = 0; i < n - 1; i++){
 		int u,v;
 		cin >> u >> v;
 		Adj[u].push_back(v);

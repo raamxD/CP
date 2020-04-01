@@ -29,9 +29,9 @@ struct SegTree{
 	}
 };
 int main(){
-    vector<long long> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    SegTree S1(a,-1);
-    cout<<S1.Kqry(3,6)<<"\n";
-    S1.Updt(5,-1);
-    cout<<S1.Kqry(3,6)<<"\n";
+	vector<long long> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+	SegTree S1(a,-1);
+	cout<<S1.Kqry(3,6)<<"\n";
+	S1.Updt(5,-1);
+	cout<<S1.Kqry(3,6)<<"\n";
 }

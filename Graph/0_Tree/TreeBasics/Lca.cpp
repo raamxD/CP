@@ -8,39 +8,47 @@ vector<int> Adj[mxN];
 ////////////////////////////////////////////////////////////////////
 /// LCA Calculation
 
-// Anc[i][j] stores ancestor of Node 'i' at a distance of
+//	Anc[i][j] stores ancestor of Node 'i' at a distance of
 // 2^j above it. Anc[i][0] is thereby parent of 'i'
 // Know as Binary Lifting or Sparse Table Technique
 int Dep[mxN];
 int Anc[mxN][lgN];	//memset(Anc,-1,sizeof(Anc));
 
 void dfs(int u, int p=-1){
-	Dep[u] = (p!=-1? 1+Dep[p]:0);
+	Dep[u] = (p != -1 ? 1 + Dep[p] : 0);
 	Anc[u][0] = p;
-	for(int i=1; i<lgN; ++i)
-        if(Anc[u][i-1]!=-1)
-            Anc[u][i] = Anc[Anc[u][i-1]][i-1];
-    for(int v:Adj[u]){
-    	if(v!=p) dfs(v,u);
-    }
+	for(int i = 1; i < lgN; ++i){
+		if(Anc[u][i-1] != -1){
+			Anc[u][i] = Anc[Anc[u][i-1]][i-1];
+		}
+	}
+   for(int v : Adj[u]){
+		if(v != p) dfs(v,u);
+   }
 }
 int getLCA(int u, int v){
 	if(Dep[u] < Dep[v]) swap(u,v);
-    for(int i=lgN-1; ~i; --i)
-        if(Anc[u][i]+1 && Dep[Anc[u][i]]>=Dep[v])
-            u = Anc[u][i];
-    if(u==v) return u;
-    for(int i=lgN-1; ~i; --i)
-        if(Anc[u][i]!=Anc[v][i])
-            u=Anc[u][i], v=Anc[v][i];
-    return Anc[u][0];
+   for(int i = lgN - 1; ~i; --i){
+		if(Anc[u][i] + 1 && Dep[Anc[u][i]] >= Dep[v]){
+			u = Anc[u][i];
+		}
+	}
+   if(u == v){
+		return u;
+	}
+	for(int i = lgN - 1; ~i; --i){
+		if(Anc[u][i] != Anc[v][i]){
+			u = Anc[u][i], v = Anc[v][i];
+		}
+	}
+	return Anc[u][0];
 }
 ////////////////////////////////////////////////////////////////////
 
 int main() {
 	int n;
 	cin >> n;
-	for(int i = 0; i < n-1; i++){
+	for(int i = 0; i < n - 1; i++){
 		int u,v;
 		cin >> u >> v;
 		Adj[u].push_back(v);

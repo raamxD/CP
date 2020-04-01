@@ -15,12 +15,14 @@ int End[mxN];
 
 void EulerTour(int u, int par){
 	Flattened.push_back(u);
-	Start[u] = Flattened.size()-1;
+	Start[u] = Flattened.size() - 1;
 	for(int v : G[u]){
-		if(v == par) continue;
+		if(v == par){
+			continue;
+		}
 		EulerTour(v,u);
 	}
-	End[u] = Flattened.size()-1;
+	End[u] = Flattened.size() - 1;
 }
 
 int main() {
@@ -36,16 +38,12 @@ int main() {
 		G[u].push_back(v);
 		G[v].push_back(u);
 	}
-	
 	EulerTour(0,-1);
-	
 	cout << "INDX:\t";for(int i=0; i<n; i++) cout << i << "\t";	cout << "\n";
 	cout << "FLAT:\t";for(int z : Flattened) cout << z << "\t"; cout << "\n\n";
 	cout << "NODE:\t";for(int i=0; i<n; i++) cout << i << "\t"; cout << "\n";
 	cout << "SIDX:\t";for(int i=0; i<n; i++) cout << Start[i] << "\t"; cout << "\n";
 	cout << "EIDX:\t";for(int i=0; i<n; i++) cout << End[i] << "\t"; cout << "\n";
-	
-	return 0;
 }
 /*
 14

@@ -5,12 +5,14 @@ const int mxN = 2e5+5;
 vector<int> G[mxN]; 
 
 int p[mxN];
-pair<int,int> dfs(int u, int par, int dis=0){
-	p[u]=par;
-	pair<int,int> res={dis,u};
-	for(int v:G[u]){
-		if(v==par) continue;
-		res=max(res,dfs(v,u,dis+1));
+pair<int,int> dfs(int u, int par, int dis = 0){
+	p[u] = par;
+	pair<int, int> res = {dis,u};
+	for(int v : G[u]){
+		if(v == par){
+			continue;
+		}
+		res = max(res,dfs(v,u,dis+1));
 	}
 	return res;
 }
@@ -28,27 +30,20 @@ int main() {
 		G[u].push_back(v);
 		G[v].push_back(u);
 	}
-	
-	auto endpt1 = dfs(0,-1);
-	auto endpt2 = dfs(endpt1.second,-1);
-	
+	auto endpt1 = dfs(0, -1);
+	auto endpt2 = dfs(endpt1.second, -1);
 	int node1 = endpt1.second;	// end 1 of diam
 	int node2 = endpt2.second;	// end 2 of diam
 	int dimlen = endpt2.first;	// length of diam
-	
 	// diameter itself
 	vector<int> diam;
 	int node = node2;
-	while(node!=node1){
+	while(node != node1){
 		diam.push_back(node);
 		node = p[node];
 	}
 	diam.push_back(node1);
-	
-	
 	for(auto z : diam) cout << z + 1 << " ";
-	
-	return 0;
 }
 /*
 14
