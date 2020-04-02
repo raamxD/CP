@@ -17,8 +17,8 @@ vector<int> bfs(int u, int n){
          if(res[i] == INT_MAX){
             res[i] = res[node] + 1;
             Q.push(i);
-			}
-		}
+         }
+      }
    }
    return res;
 }
@@ -28,25 +28,25 @@ int main(){
    ios_base::sync_with_stdio(0);
    cin.tie(0);
     
-	int n,m;
+   int n,m;
    cin >> n >> m; 
    for(int i = 0; i < m; ++i){
       int u,v;
       cin >> u >> v;
-		--u;--v;
-		adj[u].push_back(v);
-		adj[v].push_back(u);
+      --u;--v;
+      adj[u].push_back(v);
+      adj[v].push_back(u);
    }
    cout << "Shortest distance from Node 1 : ";
-	vector<int> d1 = bfs(0,n);
-	for(int i = 0; i < n; ++i){
-		cout << "[" << i+1 << ", " << d1[i] << "] ";
-	}
-	cout << "\nShortest distance from Node " << n << " : ";
-	vector<int> dn = bfs(n-1,n);
-	for(int i = 0; i < n; ++i){
-		cout << "[" << i+1 << ", " << dn[i] << "] ";
-	}
+   vector<int> d1 = bfs(0,n);
+   for(int i = 0; i < n; ++i){
+      cout << "[" << i+1 << ", " << d1[i] << "] ";
+   }
+   cout << "\nShortest distance from Node " << n << " : ";
+   vector<int> dn = bfs(n-1,n);
+   for(int i = 0; i < n; ++i){
+      cout << "[" << i+1 << ", " << dn[i] << "] ";
+   }
 }
 
 /*

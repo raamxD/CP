@@ -1,6 +1,6 @@
 /*
-	Problem Code 	: 	Marbles -> https://codeforces.com/contest/1215/problem/E
-	Solution     	: 	https://codeforces.com/blog/entry/69815
+   Problem Code   :  Marbles -> https://codeforces.com/contest/1215/problem/E
+   Solution       :  https://codeforces.com/blog/entry/69815
 */
 
 using namespace std;
@@ -14,18 +14,18 @@ ll cost[mxB][mxB];
 ll frq[mxB];
 
 void solve(){
-	int n;
+   int n;
    cin >> n;
-	for(int i = 0; i < n; ++i){
+   for(int i = 0; i < n; ++i){
       int x;
       cin >> x;
       ++frq[--x];
       for(int j = 0; j < mxB; ++j){
          if(x != j){
-				cost[x][j] += frq[j]; 
-			}
-		}
-	}
+            cost[x][j] += frq[j]; 
+         }
+      }
+   }
    memset(dp,0x3f,sizeof(dp)); 
    dp[0] = 0;
    for(int mask = 0; mask < mxN; ++mask){
@@ -35,9 +35,9 @@ void solve(){
             for(int j = 0; j < mxB; ++j){
                if(mask & (1 << j)){   
                   c += cost[j][i];
-					}
-				}
-				int newmask = (mask ^ (1 << i));
+               }
+            }
+            int newmask = (mask ^ (1 << i));
             dp[newmask] = min(dp[newmask], dp[mask] + c);
          }
       }

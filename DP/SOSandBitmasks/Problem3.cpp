@@ -1,5 +1,5 @@
 /*
-	Yet Another Substring Reverse
+   Yet Another Substring Reverse
 
    Problem Code       :  https://codeforces.com/contest/1234/problem/F
    Problem Analysis   :  https://codeforces.com/blog/entry/70233 
@@ -25,8 +25,8 @@ void solve(){
       for(int j = 0; j < 20 && j + i < (int) s.size(); ++j){
          int pos = (1 << (s[i + j] - 'a'));
          if(mask & pos){
-				break;
-			};
+            break;
+         };
          mask ^= pos;
          dp[mask] = __builtin_popcount(mask);
       }
@@ -34,9 +34,9 @@ void solve(){
    for(int mask = 0; mask < mxN; ++mask){
       for(int i = 0; i < lgN; ++i){
          if(mask & (1 << i)){
-				dp[mask] = max(dp[mask], dp[(mask ^ (1 << i))]);
+            dp[mask] = max(dp[mask], dp[(mask ^ (1 << i))]);
          }   
-		}
+      }
     }
    int ans = INT_MIN;
    for(int i = 0; i < mxN; ++i){

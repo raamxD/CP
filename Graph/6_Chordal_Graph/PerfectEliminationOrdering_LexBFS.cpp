@@ -10,8 +10,8 @@ vector<int> adj[mxN];
 vector<int> lexBFS(int n){
    set<pair<int,int>> pq;
    for(int i = 0; i < n; ++i){
-		pq.insert({0, i});
-	}
+      pq.insert({0, i});
+   }
    vector<int> seq, label(n,0), used(n,0);
    for(int i = 0; i < n; ++i){
       auto u = pq.rbegin() -> second;
@@ -19,9 +19,9 @@ vector<int> lexBFS(int n){
       used[u] = 1;
       for(auto v : adj[u]){
          if(used[v]){
-				continue;
+            continue;
          }
-			pq.erase({label[v], v});
+         pq.erase({label[v], v});
          ++label[v];
          pq.insert({label[v],v});
       }
@@ -34,21 +34,21 @@ vector<int> lexBFS(int n){
 bool isChordal(int n, vector<int> &seq){
    vector<set<int>> adjSet(n);
    for(int i = 0; i < n; ++i){
-		adjSet[i] = set<int>(begin(adj[i]), end(adj[i]));
-	}
+      adjSet[i] = set<int>(begin(adj[i]), end(adj[i]));
+   }
    vector<int> pos(n,-1);
    for(int i = 0; i < n; ++i){
       int u = seq[i];
       int closest = u;
       for(auto v : adj[u]){
-			if(pos[v] > pos[closest]){
-				closest = v;
-			}
-		}
+         if(pos[v] > pos[closest]){
+            closest = v;
+         }
+      }
       for(auto v : adj[u]){
-			if(pos[v] != -1 && closest != v && !adjSet[closest].count(v)){
-				return 0;
-			}
+         if(pos[v] != -1 && closest != v && !adjSet[closest].count(v)){
+            return 0;
+         }
       }
       pos[u] = i;
    }

@@ -9,9 +9,9 @@ using namespace std;
 
 struct hashFunc{
     
-	const int p = 31;
-	const int m = 1000000007;
-	vector<long long> poww;
+   const int p = 31;
+   const int m = 1000000007;
+   vector<long long> poww;
 
    hashFunc(int mxN){
       poww.assign(mxN,1);
@@ -32,7 +32,7 @@ struct hashFunc{
       vector<long long> h(n + 1, 0);
       for(int i = 0; i < n; ++i)
       h[i + 1] = (h[i] + (s[i] - 'a' + 1) * poww[i]) % m;
-		int cnt = 0;
+      int cnt = 0;
       for(int i = 1; i <= n; ++i){
          set<long long> hs;
          for(int j = 0; j <= n - i; ++j){
@@ -48,13 +48,13 @@ struct hashFunc{
 
 int main(){
 
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
 
-	string s1 = "bitch";
-	string s2 = "abab";
+   string s1 = "bitch";
+   string s2 = "abab";
 
-	hashFunc H(100);
-	cout << H.hashVal(s1) << " " << H.unqSubstrings(s2) << "\n";
+   hashFunc H(100);
+   cout << H.hashVal(s1) << " " << H.unqSubstrings(s2) << "\n";
 }
 

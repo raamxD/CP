@@ -2,15 +2,15 @@
       Source to study     -   https://en.wikipedia.org/wiki/Stirling_numbers_of_the_first_kind
         
       O(nlog^2n) approach to find coefficients of polynomial
-				1. [x * (x-1) * (x-2) * ... * (x-r)]
-				2. [x * (x+1) * (x+2) * ... * (x+r)]
+            1. [x * (x-1) * (x-2) * ... * (x-r)]
+            2. [x * (x+1) * (x+2) * ... * (x+r)]
         
       These rising or falling factorial type polynomial's coefficient known as Stirling Numbers of 1st Kind.
       Code uses Divide and Conquer Strategy and is pretty fast when r <= 10^5.
       For r > 10^5 use O(nlogn) approach using polynomial translation.
 
-      Note : 	1. Coefficients are calculated under NTT friendly modulus.
-					2. You can make it make it compatible with Mint class (NTTwithMint.cpp).
+      Note :   1. Coefficients are calculated under NTT friendly modulus.
+               2. You can make it make it compatible with Mint class (NTTwithMint.cpp).
 */
 
 using namespace std;
@@ -75,7 +75,7 @@ struct ntt{
             }
          }
       }
-   }	
+   }  
 }NTT;
 
 /// Stirling numbers of first kind
@@ -134,25 +134,25 @@ vector<ll> GetStirling(int r){
 
 int main(){
 
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
 
-	//freopen(".\\testcases\\0.in","r",stdin);
-	//freopen(".\\testcases\\0.out","w",stdout);
-	cout <<"\n\n--------------------------------\n~OUTPUT:\n\n";      
-	auto t_start = chrono::high_resolution_clock::now();
-	/*COPY*/
+   //freopen(".\\testcases\\0.in","r",stdin);
+   //freopen(".\\testcases\\0.out","w",stdout);
+   cout <<"\n\n--------------------------------\n~OUTPUT:\n\n";      
+   auto t_start = chrono::high_resolution_clock::now();
+   /*COPY*/
 
-	vector<ll> S;
+   vector<ll> S;
 
-	S = GetStirling(0,2);
-	for(auto z:S) cout<<z<<" "; cout<<"\n";
+   S = GetStirling(0,2);
+   for(auto z:S) cout<<z<<" "; cout<<"\n";
 
-	S = GetStirling(3);
-	for(auto z:S) cout<<z<<" "; cout<<"\n";
+   S = GetStirling(3);
+   for(auto z:S) cout<<z<<" "; cout<<"\n";
 
-	/*STOP*/
-	auto t_end = chrono::high_resolution_clock::now(); 
-	double t_elps = chrono::duration_cast<chrono::nanoseconds>(t_end - t_start).count();
-	cout << "\n~Time Elapsed : " << fixed << setprecision(9) << t_elps * 1e-9 << " sec\n";
+   /*STOP*/
+   auto t_end = chrono::high_resolution_clock::now(); 
+   double t_elps = chrono::duration_cast<chrono::nanoseconds>(t_end - t_start).count();
+   cout << "\n~Time Elapsed : " << fixed << setprecision(9) << t_elps * 1e-9 << " sec\n";
 }
