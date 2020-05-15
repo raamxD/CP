@@ -88,7 +88,6 @@ int main() {
 			cout << aC.node[i].nxtState[j] << " ";
 		}
 		cout << "\tsuf : " << aC.node[i].sufLink << "\n";
-		// cout << "\n";
 	}
 	return 0;
 }
