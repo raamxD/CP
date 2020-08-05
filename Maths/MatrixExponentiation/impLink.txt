@@ -1,0 +1,19 @@
+
+Errichto's	Contest - 
+	DashBoard	-	https://codeforces.com/gym/102644
+	CF article 	-	https://codeforces.com/blog/entry/80195
+	
+Problem solution videos
+	Part1(ABCDEF) 	- 	https://youtu.be/kQuCOFzWoa0
+	Part2(GHI)		-	https://youtu.be/RA_SpxP2t54
+
+More sources to learn : 
+
+http://zobayer.blogspot.com/2010/11/matrix-exponentiation.html
+https://codeforces.com/blog/entry/23196
+https://codeforces.com/blog/entry/43225
+
+Some cool problems : 
+
+https://codeforces.com/gym/102644/problems
+https://codeforces.com/problemset/problem/821/E
