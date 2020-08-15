@@ -3,7 +3,7 @@
 "  G51kv10km8jvgg"*yG52kv9kn -> magic
 "  :u -> undo the changes
 "  G61k  moves the cursor 
-nmap cc : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G61k
+nmap CC : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G61k
 
 set encoding=utf-8
 set autoread
@@ -14,16 +14,16 @@ nnoremap <S-Tab> <<
 inoremap <S-Tab> <C-d>
 vmap <Tab> >gv
 vmap <S-Tab> <gv
-
+inoremap jk <esc>
 
 "Read Input from cmd and Output in cmd [ALT + r]
-autocmd filetype cpp nnoremap <A-r> :!cls && echo on && echo ~Compiling....&& g++ -std=c++17 %:p -o %:r.exe && echo ~Compilation Successfull. &echo.~Running....&echo.&echo.--------------------------------&echo.~INPUT: &echo. && %:p:r.exe &echo.&echo.~Running Complete.&echo.<CR>
+autocmd filetype cpp nnoremap <A-r> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: &echo. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
 
 "Read Input from File and Output in cmd [ALT + y]
-autocmd filetype cpp nnoremap <A-y> :!cls && echo on && echo ~Compiling....&& g++ -std=c++17 %:p -o %:r.exe && echo ~Compilation Successfull. &echo.~Running....&echo.&echo.--------------------------------&echo.~INPUT: Read from file. && %:p:r.exe &echo.&echo.~Running Complete.&echo.<CR>
+autocmd filetype cpp nnoremap <A-y> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: Read from file. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
 
 "Read Input from File and Write in File [RALT + u]
-autocmd filetype cpp nnoremap <A-u> :!cls && echo on && echo ~Compiling....&& g++ -std=c++17 %:p -o %:r.exe && echo ~Compilation Successfull. &echo.~Running....&echo.&echo.--------------------------------&echo.~INPUT: Read from file.&echo.&echo.--------------------------------&echo.~OUTPUT: Written to file.&echo. && %:p:r.exe &echo.&echo.~Running Complete.&echo.<CR>
+autocmd filetype cpp nnoremap <A-u> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: Read from file.&echo.&echo.*************************************&echo.~OUTPUT: Written to file.&echo. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
 
 
 " Ctrl + Backspace to delete entire word when cursor is at the end of the word
@@ -50,10 +50,13 @@ nnoremap <A-Down> :m +1<CR>
 source $VIMRUNTIME/mswin.vim
 behave mswin
 set ruler
-set number
 syntax enable
 set bg=dark
-set guifont=Consolas:h11:cDEFAULT
+set guifont=Source\ Code\ Pro\ for\ Powerline:h9.5:cANSI " Font
+set guifontwide=Source\ Code\ Pro\ for\ Powerline:h9.5:cANSI " gvim (?)
+set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 
 "Normal vimrc stuff like tabwidth
 set guioptions-=T
@@ -62,8 +65,12 @@ set shiftwidth=3
 set expandtab
 
 call plug#begin('~/.vim/plugged')
+   Plug 'octol/vim-cpp-enhanced-highlight'
+   Plug 'reedes/vim-colors-pencil'
    Plug 'Yggdroot/indentLine'
-   Plug 'itchyny/lightline.vim'
+   Plug 'vim-airline/vim-airline'
+   Plug 'vim-airline/vim-airline-themes'
+   Plug 'mkitt/tabline.vim'
    Plug 'scrooloose/nerdtree'
    Plug 'morhetz/gruvbox'
    Plug 'dense-analysis/ale'
@@ -82,6 +89,21 @@ call plug#begin('~/.vim/plugged')
    Plug 'christophermca/meta5'
 call plug#end()
 
+"AirlineTheme 
+let g:airline_theme='powerlineish'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+"cpp - enhanced highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
 " Plugin require : vim - templates
 " Used for loading templates on required shortcut keys.
@@ -121,10 +143,13 @@ vmap n <plug>NERDCommenterMinimal<CR>
 " error/warning.
 let g:ale_linters = {'c': ['clang'], 'cpp': ['g++']}
 let g:ale_cpp_gcc_executable = 'C:\mingw-w64\x86_64-7.3.0-win32-seh-rt_v5-rev0\mingw64\bin\gcc.exe'
-let g:ale_cpp_gcc_options="-Wall -O3"
+let g:ale_cpp_gcc_options="-Wall -O4"
 let g:ale_c_gcc_executable = 'C:\mingw-w64\x86_64-7.3.0-win32-seh-rt_v5-rev0\mingw64\bin\gcc.exe'
 let g:ale_c_gcc_options="-Wall -O2"
-
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_set_highlights = 1
+highlight ALEWarning ctermbg=DarkMagenta
 
 " Plugin require : vim-auto-save, vim-autoread
 " Auto Saves whenever you leave Insert mode
@@ -148,11 +173,11 @@ let g:dracula_colorterm = 0
 "colorscheme gruvbox
 "colorscheme darkblue
 "colorscheme challenger-deep
-colorscheme deep-space
+"colorscheme deep-space
 "colorscheme meta5
 "colorscheme colors-lucid
 "colorscheme gotham
-"colorscheme dogrun
+colorscheme torte 
 
 " Plugin require : nerdtree
 " File manager for vim. 
