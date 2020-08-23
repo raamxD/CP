@@ -1,0 +1,483 @@
+"custom mapping 
+" : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g -> replaces with empty space
+"  G51kv10km8jvgg"*yG52kv9kn -> magic
+"  :u -> undo the changes
+"  G61k  moves the cursor 
+"  G3?solve() gets the cursor to solve() function
+"nmap cc : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G61k
+ nmap cc : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G3?solve()<CR>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+set encoding=utf-8
+set re=1
+set timeout timeoutlen=400
+set autoread
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Tab, shift tab to move text, jj shortcut key for escape.
+map t? <Nop>
+nnoremap <S-Tab> <<
+inoremap <S-Tab> <C-d>
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+inoremap jj <esc>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Read Input from cmd and Output in cmd [ALT + r]
+autocmd filetype cpp nnoremap <A-r> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: &echo. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
+
+"Read Input from File and Output in cmd [ALT + y]
+autocmd filetype cpp nnoremap <A-y> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: Read from file. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
+
+"Read Input from File and Write in File [RALT + u]
+autocmd filetype cpp nnoremap <A-u> :!cls && echo on && echo ~COMPILING....&echo. && g++ -std=c++17 %:p -o %:r.exe -Wall -Wextra && echo ~COMPILATION SUCCESSFULL. &echo.&echo.~RUNNING....&echo.&echo.*************************************&echo.~INPUT: Read from file.&echo.&echo.*************************************&echo.~OUTPUT: Written to file.&echo. && %:p:r.exe &echo.&echo.~RUNNING COMPLETE.&echo.<CR>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Ctrl + Backspace to delete entire word when cursor is at the end of the word
+" Ctrl + delete to delete entire word when cursor is at start of word
+" Alt + Backspace deletes everything from cursor to start of line
+" Alt + Delete current line
+inoremap <C-BS> <C-W>
+inoremap <A-BS> <C-U>
+inoremap <C-Del> X<Esc>ce
+inoremap <A-Del> <Esc>ddi
+"Does same thig in normal mode
+nnoremap <C-BS> i<C-W><Esc
+nnoremap <A-BS> i<C-U><Esc>
+nnoremap <C-Del> <Esc>ce
+nnoremap <A-Del> dd
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Moving in Insert mode, Ditch the arrow keys
+set winaltkeys=no
+inoremap <A-h> <Left>
+inoremap <A-j> <Down>
+inoremap <A-k> <Up>
+inoremap <A-l> <Right>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Swap Lines in normal mode
+" Alt + k 
+" Alt + j
+nnoremap <A-k> :m -2<CR>
+nnoremap <A-j> :m +1<CR>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Highligting search pattern
+" f4 to highlight pattern
+" enter to disable higliting of current pattern
+noremap <F4> :set hlsearch! hlsearch?<CR>
+nnoremap <CR> :nohlsearch<CR><CR>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" font, line number, bg color etc,
+source $VIMRUNTIME/mswin.vim
+behave mswin
+set ruler
+syntax enable
+set bg=dark
+set guifont=Source\ Code\ Pro\ for\ Powerline:h9.5:cANSI " Font
+set guifontwide=Source\ Code\ Pro\ for\ Powerline:h9.5:cANSI " gvim (?)
+set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+set ttyfast
+set lazyredraw
+set nocursorcolumn
+set nocursorline
+syntax sync minlines=256
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Normal vimrc stuff like tabwidth
+set guioptions-=T
+set tabstop=3
+set shiftwidth=3
+set expandtab
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"Installed Plugins
+"Search online for more info about them.
+
+call plug#begin('~/.vim/plugged')
+   Plug 'octol/vim-cpp-enhanced-highlight'
+   Plug 'reedes/vim-colors-pencil'
+   Plug 'Yggdroot/indentLine'
+   Plug 'vim-airline/vim-airline'
+   Plug 'vim-airline/vim-airline-themes'
+   Plug 'mkitt/tabline.vim'
+   Plug 'scrooloose/nerdtree'
+   Plug 'morhetz/gruvbox'
+   Plug 'dense-analysis/ale'
+   Plug 'jiangmiao/auto-pairs'
+   Plug 'scrooloose/nerdcommenter'
+   Plug 'tibabit/vim-templates'
+   Plug '907th/vim-auto-save'
+   Plug 'djoshea/vim-autoread'
+   Plug 'dracula/vim', {'as':'dracula'}
+   Plug 'whatyouhide/vim-gotham'
+   Plug 'mkarmona/materialbox'
+   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+   Plug 'tyrannicaltoucan/vim-deep-space'
+   Plug 'cseelus/vim-colors-lucid'
+   Plug 'christophermca/meta5'
+call plug#end()
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Plugin require : AirlineTheme 
+
+let g:airline_theme='powerlineish'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Plugin require : Cpp - enhanced highlighting
+
+let g:cpp_concepts_highlight = 1
+"let g:cpp_class_scope_highlight = 1
+"let g:cpp_member_variable_highlight = 1
+"let g:cpp_class_decl_highlight = 1
+"let g:cpp_posix_standard = 1
+"let g:cpp_experimental_template_highlight = 1
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Simple file reading in vim. can be used to load templates like ordered_set,
+" Fenwick etc.
+nmap tm :r E:\CP\Notes\FastAccess\
+
+" Plugin require : vim - templates
+
+" Used for loading templates on required shortcut keys.
+let g:tmpl_author_name = 'raam'
+" when problem has only one testcase just press t1 in normal mode
+nnoremap t1 :TemplateInit t1<CR>i   
+" when problem has multiple testcase just press tn in normal mode
+nnoremap tn :TemplateInit tn<CR>i
+" :TemplateInit mint1      -> loads modular template with testcases = 1
+" :TemplateInit mintn      -> loads modular template 
+" :TemplateInit mintfact1  
+" :TemplateInit mintfactn
+" More Templates like segment tree, HLD, can be saved in template folder.
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Plugin require : nerdcommenter
+
+" Different Types of Comment 
+" Simple toggle comment (Alt + /)
+map <A-/> <plug>NERDCommenterToggle<CR>
+imap <A-/> <Esc><plug>NERDCommenterToggle<CR>i
+"Block comment (Alt + [)
+map <A-[> <plug>NERDCommenterMinimal<CR>
+imap <A-[> <Esc><plug>NERDCommenterMinimal<CR>i
+"Sexy comment (Alt + ])
+map <A-]> <plug>NERDCommenterSexy<CR>
+imap <A-]> <Esc><plug>NERDCommenterSexy<CR>i
+"Uncomment (Alt + .)
+map <A-.> <plug>NERDCommenterUncomment<CR>
+imap <A-.> <Esc><plug>NERDCommenterUncomment<CR>i
+vmap m <plug>NERDCommenterUncomment<CR>
+vmap n <plug>NERDCommenterMinimal<CR>
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Plugin require : ale
+
+" Use to show errors and warnings without actually compiling code.
+" Just save your code and if there are errors it will point an arrow
+" to those lines. Sometimes hovering to an arrow gives detail about
+" error/warning.
+let g:ale_linters = {'c': ['clang'], 'cpp': ['g++']}
+let g:ale_cpp_gcc_executable = 'C:\mingw-w64\x86_64-7.3.0-win32-seh-rt_v5-rev0\mingw64\bin\gcc.exe'
+let g:ale_cpp_gcc_options="-Wall -O4"
+let g:ale_c_gcc_executable = 'C:\mingw-w64\x86_64-7.3.0-win32-seh-rt_v5-rev0\mingw64\bin\gcc.exe'
+let g:ale_c_gcc_options="-Wall -O2"
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_set_highlights = 1
+highlight ALEWarning ctermbg=DarkMagenta
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Plugin require : vim-auto-save, vim-autoread
+
+" Auto Saves whenever you leave Insert mode
+" So it always save your code before we use our custom mapping
+" ('cc' operates in normal mode)
+let g:auto_save = 1  
+let g:auto_save_events = ["InsertLeave"]
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Plugin require : IndentLine
+
+" Used for Indentation purpose. 
+" Basically replaces tab with given character.  
+let g:indentLine_char = '.'
+"let g:indentLine_char = '»'
+"let g:indentLine_char = '┊'
+"let g:indentLine_color_gui = '#ccfada'
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Color Schemes.
+
+"let g:dracula_italic = 0
+"let g:dracula_colorterm = 0
+""colorscheme dracula
+"colorscheme gruvbox
+"colorscheme darkblue
+"colorscheme challenger-deep
+"colorscheme deep-space
+"colorscheme meta5
+"colorscheme colors-lucid
+colorscheme gotham
+"colorscheme torte 
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+" Plugin require : nerdtree
+" File manager for vim. 
+" shortcut set to Alt+Q in normal mode
+set splitright
+map <A-q> :NERDTreeToggle<CR>
+let g:NERDCreateDefaultMappings = 1
+"Sets default working directory for nerdtree.
+set belloff=all
+set autochdir
+cd E:\CP
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"************************************************************* VIM Movement and Common binds **********************************************************
+
+
+" VIM MOST COMMON KEY BINDS AND TRICKS :) 
+" Learn by heart and use them to get faster!!
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"refresh vimrc/file (No need to close gvim after doing certain changes in vimrc) -> :so $MYVIMRC
+
+
+"Move to the start and end of current line
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  ^  : Moves to the first non-blank character of a current line in Normal mode
+"  $  : Moves to the end of a line in Normal mode
+"  A  : Moves to the end of a line in Insert mode
+"  I  : Moves to the start of a line in Insert mode
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Move word by word and WORD by WORD horizontally 
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+" Difference b/w word and WORD   ->    WORDS also consider special character like .,{( as a part of word.
+
+"  w  : (word) command to jump to the beginning of the next word 
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Press nter in Normal mode
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  o  : Enter new line after the current line and enter into Insert mode   
+"  O  : Enter new line before the current line and enter in Insert mode 
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Move Vertically
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  }  :  jumps entire paragraphs downwards
+"  {  :  similarly but upwards
+"  CTRL-D : lets you move down half a page by scrolling the page
+"  CTRL-U : lets you move up half a page also by scrolling
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Move to a specific character
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  f{character}   : (find) to move to the next occurrence of a character in a current line
+"  F{character}   : (find) to move to the last occurrence of a character in a line
+"  t{character}   : (find) to move to before the next occurrence of a character in a current line
+"  T{character}   : (find) to move to before the last occurrence of a character in a line
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Move vertically with search pattern
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  /{pattern} :   search forward inside a file
+"  ?{pattern} :   to search backwards inside a file
+"  Once found, Use 'En' to get to next match and 'N' to get to last match of pattern
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Move faster with count 
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  2w allows us to move the cursor 2 words forward.
+"  5j changes your cursor position to 5 lines below.
+"  3; lets you go to the next third occurrence of a character.
+"  2/baby sends you flying to the second occurrence of baby in a document.
+"  In general, use {count}{motion} to multiply a motion {count} times.
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Some more movement tricks
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  gd       :  to jump to definition of whatever is under your cursor.
+"  gf       :  to jump to a file in an import.
+"  gg       :  to go to the top of the file.
+"  {line}gg :  to go to a specific line.
+"  G        :  to go to the end of the file.
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"deleting and changing in current line
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"delete -> remains in Normal mode
+"change -> deletes and enters into Insert mode
+
+"  d$ or D  :  delete from cursor position to end of line
+"  d^       :  delete from cursor position backward to first non-white-space character
+"  dw       :  deletes current to end of current word (including trailing space)
+"  db       :  deletes current to beginning of current word.
+
+"  c$ or C  :  change from cursor position to end of line
+"  c^       :  change from cursor position backward to first non-white-space character
+"  cw       :  changes current to end of current word (including trailing space)
+"  cb       :  change current to beginning of current word.
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"vim registers
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+" Really helpful while editing in multiple windows. 
+" Read about them from here -> https://www.brianstorti.com/vim-registers/
+
+"  There are ten types of registers:
+"  1. The unnamed register                :  ""
+"  2. 10 numbered registers               :  "0 to "9
+"  3. The small delete register           :  "-
+"  4. 26 named registers                  :  "a to "z or "A to "Z
+"  5. Three read-only registers           :  ":, "., "%
+"  6. Alternate buffer register           :  "#
+"  7. The expression register             :  "=
+"  8. The selection and drop registers    :  "*, "+ and "~ 
+"  9. The black hole register             :  "_
+"  10. Last search pattern register       :  "/
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Opeartors in vim
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"{operator}{count}{motion}
+"{count}{operator}{motion}
+
+"  The "operator" determines which action you want to perform: deleting, changing, yanking, formatting, etc.
+"  The "count" allows you to multiply the effect of an operator by performing an action a count number of times.
+"  The "motion" represents the piece of text to which to apply the action defined by the operator.
+
+"for instance : 
+"  d5j   :  to delete 5 lines downwards
+"  df'   :  to delete everything in the current line from the cursor until the first occurrence of the ' character (including the character itself)
+"  dt'   :  to do like the above example but excluding the character (so up until or just before the ' character)
+"  ggdG  :  to delete a complete document
+"  d/hello :   to delete everything until the first occurrence of hello
+   
+"USEFUL OPERATORS
+"  c  :  Change
+"  d  :  Delete
+"  y  :  Yank
+"  p  :  Paste
+"  g~ :  Toggle Case (gU to make something uppercase and gu for lower case).
+"  =  :  Indent Code 
+
+"You can use these operators much like you used as above, for example
+"  c/hello  :  changes everything until the first occurrence of hello.
+"  ggyG     :  copies a whole document
+"  gUw      :  capitalizes a word
+
+"Double an operator to make it operate on a whole line: dd deletes a whole line, cc changes a whole line, etc.
+"Capitalize an operator to have it perform a stronger (or alternate) version of its default behavior: 
+
+"  D  :  deletes from the cursor to the end of the line, 
+"  C  :  changes to the end of a line, 
+"  Y  :  like yy copies a complete line, 
+"  P  :  pastes something before the cursor, etc.
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Text Objects
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  'i' is used for inner object without whitespace
+"  'a' is used for a text object plus whitespace
+
+"  {operator}{a|i}{text-object}
+
+"The built-in text-objects are:
+   
+"  w        :  Word
+"  s        :  Sentence
+"  p        :  Paragraph
+"  b,(,)    :  Block Surrounded by ()
+"  B,{,}    :  Block Surrounded by {}
+"  <,>      :  Block Surrounded by <
+"  [,]      :  Block Surrounded by [
+"  ", '     :  Quoted text
+
+"So in order to delete different bits of text you could any of the following commands:
+"  daw   :  to delete a word (plus trailing whitespace)
+"  ciw   :  to change inner word
+"  das   :  to delete a sentence (dis to delete inner sentence)
+"  da"   :  to delete something in double quotes including the quotes themselves (di" deletes only the content inside the quotes and spares the quotes)
+"  ci"   :  to change something inside double quotes
+"  dap   :  to delete a paragraph
+"  dab   :  dab or da( or da) to delete a block surrounded by (
+"  daB   :  daB or da{ or da} to delete a block surrounded by {
+"  dat   :  to delete an HTML tag
+"  cit   :  to change the contents of an HTML tag
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+   
+"Dot Operator
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  The . command allows you to repeat the last change you made.
+
+"  Imagine that you run dd to delete a line of code. 
+"  let’s remove another line of code. How would you go about that? 
+"  You could type dd again but, even better, you could use the . command which is just a single keystroke.
+
+"  OK. You save one keystroke. So What. (Tough crowd here I see). 
+"  Well, you can use the . command to repeat any type of change, not just a single shorthand command like dd. 
+"  For instance, you could change a word for Awesome like so cawAwesome<Enter>, and then 
+"  repeat that whole command with all those keystrokes by just typing a single dot. 
+
+"  The . command works great in combination with the repeat search commands (;, ,, n or N). 
+"  Imagine that you want to delete all occurrences of cucumber. 
+"  A possible approach would be to search for cucumber /cucumber, delete it with daw and, from then 
+"  on, use n to go to the next match and . to delete it!
+
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+"Undoing and Redoing
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
+"  Type u and you’ll undo your last change,
+"  Type CTRL-R and you’ll redo it,
+"-----------------------------------------------------------------------------------------------------------------------------------------------------
