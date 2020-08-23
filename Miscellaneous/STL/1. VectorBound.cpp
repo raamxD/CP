@@ -24,27 +24,24 @@ int main() {
 */    
    
    /*
-    * lower_bound(key) : 
-    * 
-    *  Works only on "sorted" vector or set
+    * lower_bound(start iterator, end iterator, key) : 
     *
     * On ascending sorted vector,
-    * *lower_bound(begin(v), end(v), key) returns First Element >= key  
+    * 	*lower_bound(begin(v), end(v), key) 						->	returns First Element >= key  
     *
-    *  On descending sorted vector,
-    * *lower_bound(begin(v), end(v), key, greater<int>())   returns First Element <= key
-    */
+    * On descending sorted vector,
+    * 	*lower_bound(begin(v), end(v), key, greater<int>()) 	->	returns First Element <= key
+    *
+	 */
 
    /*
-    * upper_bound(key)  : First element strictly greater than key 
-    * 
-    *  Works only on "sorted" vector or set.
+    * upper_bound(start iterator, end iterator, key)
     * 
     * On ascending sorted vector,
-    * *upper_bound(begin(v), end(v), key) returns First Element > key   
+    * 	*upper_bound(begin(v), end(v), key) 						->	returns First Element > key   
     *
-    *  On descending sorted vector,
-    * *upper_bound(begin(v), end(v), key, greater<int>())   returns  First Element < key
+    * On descending sorted vector,
+    * 	*upper_bound(begin(v), end(v), key, greater<int>())   ->	returns  First Element < key
     *
     */
    
@@ -220,4 +217,3 @@ int main() {
 
    return 0;
 }
-

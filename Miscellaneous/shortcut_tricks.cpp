@@ -45,67 +45,7 @@ int main(){
 
     //////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*
-     * lower_bound(key)
-     * 
-     * a) works only on "sorted" vector or set
-     * b) returns an iterator pointing to first element >= key
-     * c) we can use *lower_bound() for set/multiset but can't perform 2nd and 3rd
-     *   operation as set is rb_tree and you can access to tree structure in o(logn)
-     */
-        
-    
-        vector<int> v = {1, 3, 5, 7, 7, 8, 9, 9, 10, 12};  int key = 6; 
-
-        // 1. get value of 1st element greater than or equal to 'key' if present else *v.end()
-    
-        cout << *lower_bound(v.begin(), v.end(), key) << "\n";
-
-
-        // 2. get count of elements strictly lesser than 'key'
-    
-        cout << (lower_bound(v.begin(), v.end(), key) - v.begin()) << "\n";
-     
-        
-        // 3. get count of elements which are greater than equal to 'key'
-    
-        cout << (v.end() - lower_bound(v.begin(), v.end(), key)) << "\n";
-
-    
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-
-    /*
-     * upper_bound(key)
-     * 
-     * a) Works only on "sorted" vector or set.
-     * b) Returns an iterator pointing to first element > key.
-     * c) We can use *upper_bound() for set/multiset but can't perform 2nd and 3rd
-     *    operation as set is rb_tree and you can access to tree structure in O(logn).
-     */
-     
-    
-        vector<int> v = {1, 3, 5, 7, 7, 8, 9, 9, 10, 12};  int key = 8;
-
-        // 1. get value of 1st element strictly greater than 'key' if present else *v.end()
-    
-        cout << *upper_bound(v.begin(), v.end(), key) << "\n";
-
-
-        // 2. get count of elements lesser than or equal to 'key'
-    
-        cout << (upper_bound(v.begin(), v.end(), key) - v.begin()) << "\n";
-     
-        
-        // 3. get count of elements which are strictly greater than 'key'
-    
-        cout << (v.end() - upper_bound(v.begin(), v.end(), key)) << "\n";
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////
-   
-    
-        // Features of C++17 support
+       // Features of C++17 support
 
         map<string, int> m = {{"first", 1}, {"second", 2}};
         for (auto &[key, value] : m) {
