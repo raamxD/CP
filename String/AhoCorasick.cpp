@@ -4,37 +4,41 @@
 
 /*
 		for a node of trie structure,
-	
-		*  nxtNode stores ID of it's 26 children, else -1 if child doesn't exist.
-      *  sufLink stores ID of longest proper suffix of string formed by chars from root to this node.
-		*  nxtState stores ID of longest proper suffix of (string + one of 26 chars).
-		*  par stores ID of parent of node
-		*  chr stores transition character from parent to node.
-      *  isEnd stores bool value if patter ends at this node.
+	   *  'parent' stores id of the parent node.
+      *  'symbol' stores character required to transition at current node from parent.
+      *  'finish' is flag which tells whether pattern ends at current node.
+      *  'depth' stores the depth of node of the trie structure.
+      *  'suflink' stores the id of node which is longest proper suffix of current pattern.
+      *  'outlink' stores the id of node which is longes proper suffix and also has finish = 1.
+      *  'nxtNode[i][c]' stores id of child of current node after transition of character 'c' else -1 if no such child. 
+      *  'nxtState[i][c]' stores id of node after doing transition on current node with input character 'c'.
+      *   Suffix link are also called as failure links and Outer links as dictionary links. 
 */
 
 #include <bits/stdc++.h>
 using namespace std;
 
 struct ahoCorasick{
-	
+
 	const static int mxNodes = 1000;
 	const static int mxAlpha = 26;
 	int timer = 0;
 	
 	struct Node{
-		int nxtNode[mxAlpha];
-		int nxtState[mxAlpha];
-		int sufLink = -1;
-		int  par;
-		char chr;
-		bool isEnd = 0;
-		Node(int par = -1, char chr = '$') : par(par), chr(chr){
+		int  parent;
+		char symbol;
+		bool finish = 0;
+		int  depth  = 0;
+		int  sufLink = -1;
+		int  outLink = 0;
+		int  nxtNode [mxAlpha];
+		int  nxtState[mxAlpha];
+		Node(int p = -1, char s = '$') : parent(p), symbol(s){
 			memset(nxtNode,  -1, 4 * mxAlpha);
 			memset(nxtState, -1, 4 * mxAlpha);
 		}
 	} node[mxNodes];
-
+	
 	void buildTree(vector<string> &S){
 		// Process all strings
 		for(auto &s : S){
@@ -47,24 +51,28 @@ struct ahoCorasick{
 				}
 				ptr = node[ptr].nxtNode[i];
 			}
-			node[ptr].isEnd = 1;
+			node[ptr].finish = 1;
+			node[ptr].outLink = ptr;
 		}
-		// Join longest proper suffix links for all nodes.
 		// Base Case
 		node[0].sufLink = 0;
 		for(int i = 0; i < mxAlpha; ++i){
 			node[0].nxtState[i] = 0;
 		}
-		queue<int> Q;
+		// Find depth, suffix link, outer link and nxtState for all nodes
+		queue<int> Q;   
 		Q.push(0);
 		while(!Q.empty()){
-			int curId = Q.front();
-			Q.pop();
+			int curId = Q.front(); Q.pop();
 			Node &cur = node[curId];
 			for(int c = 0; c < mxAlpha; ++c){
 				if(cur.nxtNode[c] != -1){
 					Node &child = node[cur.nxtNode[c]];
+					child.depth = 1 + cur.depth;
 					child.sufLink = node[cur.sufLink].nxtState[c];
+					if(!child.outLink){
+						child.outLink = node[child.sufLink].outLink;
+					}
 					cur.nxtState[c] = cur.nxtNode[c];
 					Q.push(cur.nxtNode[c]);
 				}else{
