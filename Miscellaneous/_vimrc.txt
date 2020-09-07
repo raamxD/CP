@@ -24,6 +24,12 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 inoremap jj <esc>
 
+" Switching between split windows using Ctrl + Arrow keys
+nnoremap <C-Left>    <C-W><C-H>
+nnoremap <C-Down>    <C-W><C-J>
+nnoremap <C-Up>      <C-W><C-K>
+nnoremap <C-Right>   <C-W><C-L>
+
 "-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 "Read Input from cmd and Output in cmd [ALT + r]
@@ -46,10 +52,10 @@ inoremap <A-BS> <C-U>
 inoremap <C-Del> X<Esc>ce
 inoremap <A-Del> <Esc>ddi
 "Does same thig in normal mode
-nnoremap <C-BS> i<C-W><Esc
-nnoremap <A-BS> i<C-U><Esc>
-nnoremap <C-Del> <Esc>ce
-nnoremap <A-Del> dd
+"nnoremap <C-BS> i<C-W><Esc
+"nnoremap <A-BS> i<C-U><Esc>
+"nnoremap <C-Del> <Esc>ce
+"nnoremap <A-Del> dd
 
 "-----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -114,7 +120,7 @@ call plug#begin('~/.vim/plugged')
    Plug 'vim-airline/vim-airline'
    Plug 'vim-airline/vim-airline-themes'
    Plug 'mkitt/tabline.vim'
-   Plug 'scrooloose/nerdtree'
+   Plug 'scrooloose/nerdtree'  
    Plug 'morhetz/gruvbox'
    Plug 'dense-analysis/ale'
    Plug 'jiangmiao/auto-pairs'
@@ -245,7 +251,8 @@ let g:indentLine_char = '.'
 "colorscheme deep-space
 "colorscheme meta5
 "colorscheme colors-lucid
-colorscheme gotham
+colorscheme darkblue
+"colorscheme gotham
 "colorscheme torte 
 
 "-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -269,16 +276,7 @@ cd E:\CP
 
 
 
-
-
-
-
-
-
-
-
-
-"************************************************************* VIM Movement and Common binds **********************************************************
+"************************************************************ VIM Movement and Most Useful Trikcs **********************************************************
 
 
 " VIM MOST COMMON KEY BINDS AND TRICKS :) 
