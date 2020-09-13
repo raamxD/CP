@@ -33,6 +33,17 @@ struct ft{
    ll Kqry(int l, int r){
       return Kqry(r) - Kqry(l-1);
    }
+	// returns lower_bound on prefix sum of array 'a'
+	int Find(int val){
+      int pos = 0, sum = 0;
+      for(int i = 20; ~i; --i){
+         if(pos + (1 << i) < n && sum + b[pos + (1 << i)] < val){
+            pos += (1 << i);
+            sum += b[pos];
+         }
+      }
+      return pos;
+   }
 };
 
 
@@ -67,6 +78,18 @@ struct ft{
       for(++i; i; i -= i & -i)
          res += b[i];
       return res;
+   }
+	// if the array on which bit is build is decereasing then, Find(val)
+	// returns rightmost index of 'a' such that a[index] >= val
+	int Find(int val){
+      int pos = 0, sum = 0;
+      for(int i = 20; ~i; --i){
+         if(pos + (1 << i) < n && sum + b[pos + (1 << i)] >= val){
+            pos += (1 << i);
+            sum += b[pos];
+         }
+      }
+      return pos;
    }
 };
 
