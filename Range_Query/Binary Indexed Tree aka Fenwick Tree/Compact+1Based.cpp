@@ -36,7 +36,7 @@ struct ft{
 	// returns lower_bound on prefix sum of array 'a'
 	int Find(int val){
       int pos = 0, sum = 0;
-      for(int i = 20; ~i; --i){
+      for(int i = __lg(n); ~i; --i){
          if(pos + (1 << i) < n && sum + b[pos + (1 << i)] < val){
             pos += (1 << i);
             sum += b[pos];
@@ -83,7 +83,7 @@ struct ft{
 	// returns rightmost index of 'a' such that a[index] >= val
 	int Find(int val){
       int pos = 0, sum = 0;
-      for(int i = 20; ~i; --i){
+      for(int i = __lg(n); ~i; --i){
          if(pos + (1 << i) < n && sum + b[pos + (1 << i)] >= val){
             pos += (1 << i);
             sum += b[pos];
