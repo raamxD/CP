@@ -29,7 +29,6 @@ std::ostream &operator<<(std::ostream &os, const C &container){
   return os << ss.str();
 }
 
-
 vector<string> vec_splitter(string s) {
    s += ',';
    vector<string> res;
@@ -46,11 +45,13 @@ __attribute__ ((unused)) int idx,
 __attribute__ ((unused)) int LINE_NUM) { cerr << endl; } 
 template <typename Head, typename... Tail>
 void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) {
-   if(idx > 0) cerr << ", "; else cerr << "Line[" << LINE_NUM << "] : ";
+   if(idx > 0) cerr << ", "; 
+   else cerr << "Line[" << LINE_NUM << "] : ";
    stringstream ss; ss << H;
    cerr << args[idx] << " = " << ss.str();
    debug_out(args, idx + 1, LINE_NUM, T...);
 }
 
 #define dbg(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
-
+#define dbgn(...) dbg(__VA_ARGS__); cerr << endl;
+#define dbg2(x) cerr << #x << " : " << x << endl << "````````````````````" << endl << endl;
