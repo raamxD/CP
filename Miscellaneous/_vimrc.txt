@@ -1,11 +1,11 @@
 "custom mapping 
-" : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g -> replaces with empty space
+" : %s/dbg(.*); \\|dbg(.*);\\|dbgn(.*);\\|dbgn(.*);\\|#include "debug.h"//g -> replaces with empty space
 "  G51kv10km8jvgg"*yG52kv9kn -> magic
 "  :u -> undo the changes
 "  G61k  moves the cursor 
 "  G3?solve() gets the cursor to solve() function
-"nmap cc : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G61k
- nmap cc : %s/dbg(.*); \\|dbg(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G3?solve()<CR>
+"nmap cc : %s/dbg(.*); \\|dbg(.*);\\|dbgn(.*);\\|dbgn(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G61k
+ nmap cc : %s/dbg(.*); \\|dbg(.*);\\|dbgn(.*);\\|dbgn(.*);\\|#include "debug.h"//g<CR> : %s/\s\+$//e<CR> : %s/\n\{3,}/\r\r/e<CR> G51kv10km8jvgg"*yG52kv9kn :u<CR> G3?solve()<CR>
 
 "-----------------------------------------------------------------------------------------------------------------------------------------------------
 
