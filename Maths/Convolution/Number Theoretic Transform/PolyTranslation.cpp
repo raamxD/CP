@@ -96,9 +96,10 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////
 
 const int mod = 998244353;
-template <int mod = mod>
-struct Modular {
-   
+template <
+ int mod = mod
+>
+struct Modular {   
    int val; 
     
    Modular(){
@@ -232,21 +233,24 @@ struct Modular {
 #define mint Modular<mod> 
 #define vm   vector<mint> 
 
-/// Combinatorics
+/// Combinatorics 
 ///////////////////////////////////////////////////////////////////////////
 
-const int mxF = 1e5;
-mint fc[mxF],_fc[mxF];
+mint  fc[(1 << 20) + 1];
+mint _fc[(1 << 20) + 1];
 
-void PreCalFact(int N){
-   fc[0]=1;for(int i=1;i<=N;i++) fc[i] = i * fc[i-1];
-  _fc[N] = fc[N].modinv();
-   for(int i=N-1;i>=0;--i) _fc[i] = (i+1) * _fc[i+1];
+inline void preProcessFact(int N = (1 << 20)){
+   for(int i = 0;i <= N; i++){
+      fc[i] = (i == 0 ? 1 : i * fc[i - 1]);
+   }
+   for(int i = N; ~i; --i){
+      _fc[i] = (i == N ? fc[N].modinv() : (i + 1) * _fc[i + 1]);
+   }
 }
 mint  nCr (ll n, ll r) {return (n < r) ? 0 :  fc[n] * _fc[n-r] * _fc[r];}
 mint _nCr (ll n, ll r) {return (n < r) ? 0 : _fc[n] *  fc[n-r] *  fc[r];}
-mint  nPr (ll n, ll r) {return (n < r) ? 0 :  fc[n] * _fc[n-r] * _fc[r];}
-mint _nPr (ll n, ll r) {return (n < r) ? 0 : _fc[n] *  fc[n-r] *  fc[r];}
+mint  nPr (ll n, ll r) {return (n < r) ? 0 :  fc[n] * _fc[n-r];}
+mint _nPr (ll n, ll r) {return (n < r) ? 0 : _fc[n] *  fc[n-r];}
 
 /// Number Theoretic Transform
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -315,7 +319,7 @@ vm polyTranslation(vm &poly, mint t){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main(){    
-   PreCalFact(1e5);
+   preProcessFact();
    vm a = {1,2};
    vm b = polyTranslation(a,1);
    for(auto z : b)

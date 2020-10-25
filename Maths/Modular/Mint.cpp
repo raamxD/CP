@@ -1,10 +1,11 @@
 /// Modular Arithmetic 
 /////////////////////////////////////////////////////////////////////////
 
-const int mod=998244353;
-template <int mod = mod>
-struct Modular {
-   
+const int mod = 1000000007;
+template <
+ int mod = mod
+>
+struct Modular {   
    int val; 
     
    Modular(){
@@ -123,8 +124,7 @@ struct Modular {
    inline friend bool operator <= (const Modular& a, const Modular& b) { return a.val <= b.val; }
 };
 
-#define mint Modular<mod> 
-#define vm   vector<mint> 
+#define mint Modular<mod>  
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 

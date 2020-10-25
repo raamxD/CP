@@ -9,10 +9,10 @@ using namespace std;
 #define ll long long
 
 const int mod = 1000000007;
-
-template <int mod = mod>
-struct Modular {
-   
+template <
+ int mod = mod
+>
+struct Modular {   
    int val; 
     
    Modular(){

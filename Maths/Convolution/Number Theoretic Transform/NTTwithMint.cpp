@@ -24,10 +24,11 @@ typedef vector<ll> vl;
 /// Modular Arithmetic 
 /////////////////////////////////////////////////////////////////////////
 
-const int mod=998244353;
-template <int mod = mod>
-struct Modular {
-   
+const int mod = 998244353;
+template <
+ int mod = mod
+>
+struct Modular {   
    int val; 
     
    Modular(){
@@ -65,9 +66,9 @@ struct Modular {
    inline Modular modpow(long long p) const {
       assert(p >= 0);
       Modular a = *this, result = 1;
-      while (p > 0){
+      while (p > 0) {
          if (p & 1)
-            result *= a;
+         result *= a;
          a *= a;
          p >>= 1;
       }
@@ -85,7 +86,7 @@ struct Modular {
       );
       return r;
    }
-
+   
    inline Modular& operator += (const Modular& other) { 
       val += other.val; 
       if(val >= mod) val -= mod; 
@@ -107,7 +108,7 @@ struct Modular {
    inline Modular& operator /= (const Modular& other) { 
       return *this *= modinv(other.val); 
    }
-
+   
    inline friend Modular operator + (const Modular& a, const Modular& b) { 
       return Modular(a) += b; 
    }
@@ -123,7 +124,32 @@ struct Modular {
    inline friend Modular operator / (const Modular& a, const Modular& b) { 
       return Modular(a) /= b; 
    }
+    
+   inline Modular operator ++ () { return *this += 1; }
+   inline Modular operator -- () { return *this -= 1; }
+   inline Modular operator ++(int) { Modular x = *this; ++*this; return x; }
+   inline Modular operator --(int) { Modular x = *this; --*this; return x; }
+   inline Modular operator -() const { return Modular(-val); }
 
+   inline friend bool operator == (const Modular& a, const Modular& b) { 
+      return a.val == b.val; 
+   }
+   inline friend bool operator != (const Modular& a, const Modular& b) { 
+      return a.val != b.val; 
+   }
+   inline friend bool operator >  (const Modular& a, const Modular& b) { 
+      return a.val >  b.val; 
+   }
+   inline friend bool operator <  (const Modular& a, const Modular& b) {
+      return a.val <  b.val; 
+   }
+   inline friend bool operator >= (const Modular& a, const Modular& b) {
+      return a.val >= b.val; 
+   }
+   inline friend bool operator <= (const Modular& a, const Modular& b) {
+      return a.val <= b.val; 
+   }
+   
    inline friend istream& operator >> (istream& stream, Modular& m) {
       long long x; stream >> x; m.val = m.Normalize(x);
       return stream;
@@ -131,19 +157,6 @@ struct Modular {
    inline friend ostream& operator << (ostream& stream, const Modular& m) {
       return stream << m.val;
    }
-
-   inline Modular operator ++ () { return *this += 1; }
-   inline Modular operator -- () { return *this -= 1; }
-   inline Modular operator ++(int) { Modular x = *this; ++*this; return x; }
-   inline Modular operator --(int) { Modular x = *this; --*this; return x; }
-   inline Modular operator -() const { return Modular(-val); }
-
-   inline friend bool operator == (const Modular& a, const Modular& b) { return a.val == b.val; }
-   inline friend bool operator != (const Modular& a, const Modular& b) { return a.val != b.val; }
-   inline friend bool operator >  (const Modular& a, const Modular& b) { return a.val >  b.val; }
-   inline friend bool operator <  (const Modular& a, const Modular& b) { return a.val <  b.val; }
-   inline friend bool operator >= (const Modular& a, const Modular& b) { return a.val >= b.val; }
-   inline friend bool operator <= (const Modular& a, const Modular& b) { return a.val <= b.val; }
 };
 
 #define mint Modular<mod> 

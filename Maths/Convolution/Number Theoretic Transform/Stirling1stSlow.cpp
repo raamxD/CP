@@ -19,7 +19,7 @@ using namespace std;
 #define ll long long
 #define vl vector<ll>
 
-const int mod=998244353;
+const int mod  = 998244353;
 
 ll modpow(ll a,ll b){
    ll res=1;a=a%mod;
