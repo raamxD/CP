@@ -1,0 +1,72 @@
+//~{{NAME}}
+//~created : {{DAY}} {{DATE}}, {{YEAR}} - {{TIME_12}} IST
+
+using namespace std;
+#include "bits/stdc++.h"
+#define ll long long
+#define ar array
+#include "debug.h" 
+
+void solve(){
+{{CURSOR}}
+}
+/*
+int main(){    
+   ios_base::sync_with_stdio(0);
+   cin.tie(NULL);
+   int tc; 
+	tc = 1;
+   while(tc--) solve();
+}
+*/
+int main(){
+
+   /* IF MAIN() STARTS AT LINE [X] THEN LAST LINE MUST BE [X + 51] IN ORDER TO USE keymap 'cc'*/
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
+
+   freopen(".\\testcases\\0.in","r",stdin);
+   freopen(".\\testcases\\0.real","w",stderr);
+   freopen(".\\testcases\\0.out","w",stdout);
+   cerr <<"\n*************************************\n~DEBUG :\n\n";
+   cout <<"\n*************************************\n~OUTPUT:\n\n";
+   auto t_start = chrono::high_resolution_clock::now();
+
+   int tc; cin >> tc; tc = 1;
+   for(int TestCaseNo = 1; TestCaseNo <= tc; ++TestCaseNo){
+      dbg2(TestCaseNo); solve(); cerr << endl << endl;
+   }
+
+                                                      // 1
+                                                      // 2
+                                                      // 3
+                                                      // 4
+                                                      // 5
+                                                      // 6
+                                                      // 7
+                                                      // 8
+                                                      // 9
+                                                      // 10
+        /*  UNCOMMENT ONLY WHEN REQUIRED!! */         // 11        
+                                                      // 12
+   /* EMPTY SPACE CAN BE USED FOR TESTING PURPOSE */  // 13             
+                                                      // 14
+                                                      // 15
+                                                      // 16
+                                                      // 17
+                                                      // 18
+                                                      // 19
+                                                      // 20
+                                                      // 21 
+                                                      // 22
+                                                      // 23
+                                                      // 24
+                                                      // 25
+
+   auto t_end = chrono::high_resolution_clock::now();
+   double t_elps = chrono::duration_cast<chrono::nanoseconds>(t_end - t_start).count();
+   cout << "\n*************************************\n~Time Elapsed : ";
+   cout << fixed << setprecision(9) << t_elps * 1e-9 << " sec\n\n";
+   cerr << "\n*************************************\n~Time Elapsed : ";
+   cerr << fixed << setprecision(9) << t_elps * 1e-9 << " sec\n\n";
+}
