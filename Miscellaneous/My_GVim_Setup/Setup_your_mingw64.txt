@@ -1,0 +1,8 @@
+I have setup the folder "mingw64" which corresponds to GCC version 10.0 which was installed using msys2. 
+Refer this video : https://www.youtube.com/watch?v=aXF4A5UeSeM&t=591s for installation purpose. 
+
+The .exe installer which is dowloaded from mingw64 official website corresponds to GCC version 8.0 which doesn't compile the 
+#include<filesystem> and many more includes with the c++--17 flags. 
+So we cannot include<bits/stdc++.h> as it throws error during compilation.
+
+You can download the latest GCC version using msys2. 

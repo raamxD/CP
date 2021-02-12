@@ -1,0 +1,40 @@
+Step 1 : 	Install the gvim_82.0050_x64.exe file. Note it is for the 64-bit Windows. You can also 	download latest version which is compatible with your windows from vim.org
+
+Step 2 :	Let us create a new "_vimrc" file in your UserAccount folder. _vimrc is the file which gvim 	will load automatically and execute the commands written in it everytime you start. There 	can be multiple 	such files but gvim has the priority set. You can check priority for system, 	user1, user2 	_vimrc by typing ":version" in gvim terminal. So just go in your home 	directory folder "C:\Users\username\" and make a empty file named "_vimrc". We will be 	soon adding commands in it.
+
+Step 3 : 	You can setup the _vimrc by adding the default commands. But there are certain vim 	plugins which makes the vim powerful and offers various functionality while using gvim. 	So now we will be downloading the vim plugin manager to manage the various plugins. The 	plugin manager vim-plug is easy to setup and use.
+			Go to https://github.com/junegunn/vim-plug and download the file name plug.vim or copy 	the code , paste it  in a file named plug.vim and save the file in the following directory.    	"C:\Program Files\Vim\vim82\autoload".
+
+Step 4 : Now we will download plugin using the vim-plug. In order to know what are vim-plug commands check their documentation. For now we will be installing the following plugins.  	Paste the following code in your vimrc, save and reload the vimrc and type command 	":PlugInstall" in your gvim terminal to install the following plugins.            
+	
+	call plug#begin('~/.vim/plugged')
+		  Plug 'octol/vim-cpp-enhanced-highlight'
+		   Plug 'reedes/vim-colors-pencil'
+		   Plug 'Yggdroot/indentLine'
+		   Plug 'vim-airline/vim-airline'
+		   Plug 'vim-airline/vim-airline-themes'
+		   Plug 'mkitt/tabline.vim'
+		   Plug 'scrooloose/nerdtree'  
+		   Plug 'morhetz/gruvbox'
+		   Plug 'dense-analysis/ale'
+		   Plug 'jiangmiao/auto-pairs'
+		   Plug 'scrooloose/nerdcommenter'
+		   Plug 'tibabit/vim-templates'
+		   Plug '907th/vim-auto-save'
+		   Plug 'djoshea/vim-autoread'
+		   Plug 'dracula/vim', {'as':'dracula'}
+		   Plug 'whatyouhide/vim-gotham'
+		   Plug 'mkarmona/materialbox'
+		   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+		   Plug 'tyrannicaltoucan/vim-deep-space'
+		   Plug 'cseelus/vim-colors-lucid'
+		   Plug 'christophermca/meta5'
+	call plug#end()
+
+Step 5 : 	But..Here's the catch. The vim plugin Airline and Airline themes requires the Powerline fonts to be installed in Windows for proper working. For that open the Powerline Folder and read the pdf on how to installl powerline fonts in windows. It is pretty straightforward.
+
+Step 6 :	Now we are done with the plugins for our setup. Just You can now copy the remaining commands from my _vimrc file. Just need to take care of certain things before we startup. If any of the below things you don't get just read the documentation of the respective plugins.
+			a)  Set the working directory for the nerdtree plugin.  
+			c)  Set directory for the ale plugin. Give path to your gcc.exe file .
+			b)  Set working directory for the "tm" command in order to load different templates from the template folder. (I have mapped the command tm to read from template folder).
+			d) 	Copy two files "t1.template" and "tn.template" in directory C:\Users\ram22\.vim\plugged\vim-templates\templates
