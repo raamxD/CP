@@ -421,7 +421,7 @@ public :
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* Accessing the i'th digit (0-based) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)*/
+/* Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)*/
 
 	int digit = (num % pow[i + 1]) / pow[i]; where pow[i] = X ^ i
 
