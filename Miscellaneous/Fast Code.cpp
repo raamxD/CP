@@ -441,3 +441,27 @@ vector<int> computeLPS(const string& str) {
  }
  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Finding a valid topological ordering + checking if cycle is present in Directed Graph using BFS
+
+	queue<int> q;
+	for(int i = 0; i < n; ++i){
+		if(!inorder[i]){
+			 q.push(i);
+		}
+	}
+	int viscount = 0;
+	vector<int> ordering;
+	while(!q.empty()){
+		int u = q.front();
+		q.pop();
+		ordering.push_back(u);
+		++viscount;
+		for(auto& v : graph[u]){
+			 if(--inorder[v] == 0){
+				  q.push(v);
+			 }
+		}
+	}
+	return (viscount == n ? ordering : "Cyclic");
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
