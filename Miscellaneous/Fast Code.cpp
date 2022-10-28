@@ -465,3 +465,30 @@ vector<int> computeLPS(const string& str) {
 	return (viscount == n ? ordering : "Cyclic");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Custom Compartor for Priority Queue 
+
+struct node{
+        int score;
+        string name;
+    };
+    struct min_cmp{
+        bool operator()(const node& a, const node& b){
+            if(a.score == b.score){
+                return a.name < b.name;
+            }
+            return a.score > b.score;
+        }
+    };
+    struct max_cmp{
+        bool operator()(const node& a, const node& b){
+            if(a.score == b.score){
+                return a.name > b.name;
+            }
+            return a.score < b.score;
+        }
+    };
+
+    priority_queue<node, vector<node>, min_cmp> min_pq;
+    priority_queue<node, vector<node>, max_cmp> max_pq;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
