@@ -419,6 +419,27 @@ public :
     }
 };
 
+int dfs(ExpressionTreeNode* node){
+    if(node -> data == '#'){
+        return node -> value;
+    }
+    int lhs = dfs(node -> lhs);
+    int rhs = dfs(node -> rhs);
+    switch(node -> data){
+        case '+' : node -> value = lhs + rhs; break; 
+        case '-' : node -> value = lhs - rhs; break;
+        case '*' : node -> value = lhs * rhs; break;
+        case '/' : node -> value = lhs / rhs; break;
+    }
+    return node -> value;
+}
+
+int calculate(string s) {
+	  ExpressionTreeNode* root = new ExpressionTreeNode();
+	  root = root -> BuildExpressionTree(s);
+	  return dfs(root);
+ }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /* Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)*/
