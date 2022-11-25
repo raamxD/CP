@@ -442,6 +442,66 @@ int calculate(string s) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Basic Calculator III
+
+class Solution {
+public:
+    void process(stack<int>& stk, int num, char op){
+        int x;
+        switch(op){
+            case '+' :  stk.push(num); break;
+            case '-' :  stk.push(-num); break;
+            case '*' :  x = stk.top(); stk.pop(); stk.push(x * num); break;
+            case '/' :  x = stk.top(); stk.pop(); stk.push(x / num); break;
+        }
+    }
+    int solve(string& s, int& i){
+        stack<int> stk;
+        int num = 0;
+        char last_operator = '+';
+        while(i < s.size()){
+            if(s[i] == ' '){
+                i++;
+                continue;
+            }
+            if(s[i] == '('){
+                i++;
+                num = solve(s, i);
+                continue;
+            }
+            if(s[i] == ')'){
+                i++;
+                break;
+            }
+            if(isdigit(s[i])){
+                // handle digits
+                num *= 10;
+                num += s[i] - '0';
+            }
+            else{
+                // handle operators +,-,*,/
+                process(stk, num, last_operator);
+                last_operator = s[i];
+                num = 0;
+            }
+            i++;
+        }
+        process(stk, num, last_operator);
+        int res = 0;
+        while(!stk.empty()){
+            res += stk.top();
+            stk.pop();
+        }
+        return res;
+    }
+    int calculate(string s) {
+        int i = 0;
+        return solve(s, i);
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /* Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)*/
 
 	int digit = (num % pow[i + 1]) / pow[i]; where pow[i] = X ^ i
