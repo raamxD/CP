@@ -573,3 +573,32 @@ struct node{
     priority_queue<node, vector<node>, max_cmp> max_pq;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+
+Euler Path and Euler Cycle in graphs : 
+
+Eulerian Path/Walk is a path in a graph that visits every edge exactly once.
+-- Condition For Eulerian Path : A Eulerian Path exist in graph iff 
+							a) All the vertices in the graph have even degree.
+							b) Exactly two vertices have odd degree. (which will become ends of the path)
+
+Eulerian Cycle/Circuit is an Eulerian Path which starts and ends on the same vertex. 
+-- Condition For Eulerian Cycle : A Eulerian Cycle exist in graph iff
+							a) All the vertices in the graph have even degree.
+
+*/
+
+// If a graph has Eulerian Path, we can use dfs to find the path in O(V + E)
+// we can make dfs call using any one end of path if eulerian path exist or any vertex if eulerian cycle exist.
+
+void dfs(string u, vector<vector<int>>& adj){
+    while(!adj[u].empty()){
+        string v = adj[u].back();	// store next node of edge
+        adj[u].pop_back();				// delete edge because we won't be using it anymore
+        dfs(v, adj);						// make dfs from next node
+    }
+    path.push_back(u);					// push node into path if all edges for node are processed
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
