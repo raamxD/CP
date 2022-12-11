@@ -620,7 +620,7 @@ public:
     }
     
     // getting the convex hull for set of points
-    vector<vector<int>> outerTrees(vector<vector<int>>& trees) {
+    vector<vector<int>> getConvexHull(vector<vector<int>>& trees) {
         int n = size(trees);
         
         // base condition
