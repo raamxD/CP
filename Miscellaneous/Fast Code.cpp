@@ -602,3 +602,64 @@ void dfs(string u, vector<vector<int>>& adj){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Getting Convex Hull For Given Set of Points
+// reference : https://iq.opengenus.org/monotone-chain-algorithm/
+
+class Solution {
+public:
+    // returns value for direction of point 'c' w.r.t line ab using cross product
+    // value = 0 means point 'c' lies on line ab
+    // value > 0 means point 'c' lies to the right of line ab (anti-clockwise direction from b to c)
+    // value < 0 means point 'c' lies to the left of line ab (clockwise direction from b to c)
+    int orientation(vector<int>& a, vector<int>& b, vector<int>& c){
+        return ((b[0] - a[0]) * (c[1] - a[1])) - ((b[1] - a[1]) * (c[0] - a[0]));
+    }
+    bool isAnticlockwise(vector<int>& a, vector<int>& b, vector<int>& c){
+        return orientation(a, b, c) < 0;
+    }
+    
+    // getting the convex hull for set of points
+    vector<vector<int>> outerTrees(vector<vector<int>>& trees) {
+        int n = size(trees);
+        
+        // base condition
+        if(n <= 3){
+            return trees;
+        }
+        
+        // sort points based on x coordinates
+        sort(begin(trees), end(trees));
+        
+        // getting lower hull for all points
+        vector<vector<int>> lowerHull;
+        for(int i = 0; i < n; ++i){
+            while(size(lowerHull) > 1 && isAnticlockwise(lowerHull[size(lowerHull) - 2], lowerHull.back(), trees[i])){
+                lowerHull.pop_back();
+            }
+            lowerHull.push_back(trees[i]);
+        }
+        
+        // getting upper hull for all points
+        vector<vector<int>> upperHull;
+        for(int i = n - 1; i >= 0; --i){
+            while(size(upperHull) > 1 && isAnticlockwise(upperHull[size(upperHull) - 2], upperHull.back(), trees[i])){
+                upperHull.pop_back();
+            }
+            upperHull.push_back(trees[i]);
+        }
+        
+        // combine lower hull and upper hull to get the convex hull
+        vector<vector<int>> convexHull;
+        convexHull.insert(end(convexHull), begin(lowerHull), end(lowerHull));
+        convexHull.insert(end(convexHull), begin(upperHull), end(upperHull));
+        
+        // remove the duplicates
+        sort(begin(convexHull), end(convexHull));
+        convexHull.erase(unique(begin(convexHull), end(convexHull)), end(convexHull));
+        
+        return convexHull;
+    }
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
