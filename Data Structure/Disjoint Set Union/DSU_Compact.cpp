@@ -53,3 +53,28 @@ struct DSU{
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+
+class DisjointUnionSet{
+private :
+    vector<int> leader, size;
+public :
+    DisjointUnionSet(int mx) : leader(mx), size(mx, 1){
+        iota(begin(leader), end(leader), 0);
+    }
+    int GetLeader(int a){
+        return leader[a] == a ? a : leader[a] = GetLeader(leader[a]);
+    }
+    void MergeGroups(int a, int b){
+        a = GetLeader(a); b = GetLeader(b);
+        if(a != b){
+            if(size[a] > size[b]) swap(a, b);
+            size[b] += size[a];
+            leader[a] = b;
+        }
+    }
+    int GetGroupSize(int a){
+        return size[GetLeader(a)];
+    }
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////
