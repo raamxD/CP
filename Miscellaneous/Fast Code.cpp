@@ -69,8 +69,7 @@ class SieveOfEratosthenes{
       return result;
     }
     bool IsPrime(int num){
-      assert(num < size(prime) && num > 1);
-      return prime[num];
+      return num > 1 && prime[num];
     }
     int GetSmallestPrimeFactor(int num){
       assert(num < size(prime) && num > 1);
@@ -97,7 +96,7 @@ class SieveOfEratosthenes{
 		}
 	  }
 	  bool isPrime(int x){
-		return spf[x] == x;
+		return x > 1 && spf[x] == x;
 	  }
 	  vector<array<int,2>> GetPrimeFactorisation(int x){
 		vector<array<int, 2>> result;
