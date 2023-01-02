@@ -214,6 +214,35 @@ for(int i = 0; i <= N; ++i){
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Splitting string using delimiter in C++
+
+string s = "Banana,Mango,Apple,Grapes";
+stringstream ss(s);
+string piece;
+while(getline(ss, piece, ','){
+	cout << piece << "\n";
+}
+
+Output : 
+	Banana	
+	Mango
+	Apple
+	Grapes
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Useful char functions in C++
+
+int isalnum(int ch)	The isalnum() function returns nonzero if its argument is a letter or a digit; otherwise it returns zero.
+int isalpha(int ch)	This function returns nonzero if ch is an alphabet; otherwise it returns zero.
+int isdigit(int ch)	Returns nonzero if ch is a digit (i.e., 0-9); otherwise it returns zero.
+int islower(int ch)	Returns nonzero if ch is a lowercase letter ; otherwise it returns zero.
+int isupper(int ch)	This function returns nonzero if ch is uppercase ; otherwise it returns zero.
+int toupper(int ch)	Returns the uppercase equivalent of ch if ch is a letter; otherwise, ch is returned unchanged.
+int tolower(int ch)	Returns the lowercase equivalent of ch if ch is a letter; otherwise ch is returned unchanged.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct StringHash{
 
 // (s, p, m)   =   (s[0] * p^0 + s[1] * p^1 + s[2] * p^2 +...+ s[len(s)-1] * p^(len(s) - 1)) % m
