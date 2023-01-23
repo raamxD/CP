@@ -159,6 +159,45 @@ int modinv(int a, int mod){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Euclidean algorithm for GCD
+// src : https://cp-algorithms.com/algebra/euclid-algorithm.html
+
+/* 
+
+Originally, the Euclidean algorithm was formulated as : subtract the smaller number from the larger one until one of the numbers is zero. 
+Indeed, if 'g' divides 'a' and 'b', it also divides 'a-b'. On the other hand, if 'g'  divides 'a-b' and 'b', then it also divides 'a = b + (a-b)', 
+which means that the sets of the common divisors of {a, b} and {b,a-b} coincide. 
+Note that 'a' remains the larger number until 'b' is subtracted from it at least floor(a / b) times. 
+Therefore, to speed things up, we can use modulo operation.  Then the algorithm is formulated in an extremely simple way:
+
+				  gcd(a, b) = 	{	a 						if(b == 0)
+									{	gcd(b, a % b) 		otherwise.
+*/
+
+// recursive 1
+int gcd (int a, int b) {
+    if (b == 0)
+        return a;
+    else
+        return gcd (b, a % b);
+}
+
+// recursive short
+int gcd (int a, int b) {
+    return b ? gcd (b, a % b) : a;
+}
+
+// iterative
+int gcd (int a, int b) {
+    while (b) {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class Combinatorics{
 private:
 	const int mod = 1e9 + 7;
