@@ -611,7 +611,38 @@ vector<int> computeLPS(const string& str) {
 		}
 	}
 	return (viscount == n ? ordering : "Cyclic");
+		
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Cycle detection and identification using 3-color dfs in directed graph
 
+/*
+t[i] stores color of node 'i' as : 
+	- t[i] < 0 implies node 'i' hasn't been visited/touched yet 
+	- t[i] = 0 implies node 'i' has been visited
+	- t[i] > 0 implies we are examining whether node 'i'. It basically marks entry time of dfs. 
+*/
+		
+vector<int> t;
+vector<vector<int>> adj;
+		
+void dfs(int u, int par = -1){
+  if(t[u] != 0){
+		t[u] = (par == -1 ? 1 : 1 + t[par]);
+		for(auto& v : adj[u]){
+			 if(t[v] == -1){
+				  dfs(v, u);
+			 }else
+			 if(t[v] > 0 && t[v] < t[u]){
+				  	// gotcha! found a cycle with : u and v as endpoints & t[u] - t[v] + 1 as cycle length.
+			 }
+		}
+		t[u] = 0;
+  }
+}
+// call on each vertex
+t.resize(n, -1);
+for(int i = 0; i < n; ++i)  dfs(i);
+		
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Custom Compartor for Priority Queue 
 
