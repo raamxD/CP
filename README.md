@@ -1,2 +1,2 @@
 # CP
-Competetive Programming 
+Competitive Programming 
