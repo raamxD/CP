@@ -145,7 +145,7 @@ int modpow(int a, int b, int mod){
 		if(b & 1){
 			res = (res * a) % mod;
 		}
-		res = (res * res) % mod;
+		a = (a * a) % mod;
 		b /= 2;
 	}
 	return res;
