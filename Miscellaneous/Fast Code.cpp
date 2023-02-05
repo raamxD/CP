@@ -296,6 +296,15 @@ int tolower(int ch)	Returns the lowercase equivalent of ch if ch is a letter; ot
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Know your STL Libraries :
+1) <algorithm> - 	https://cplusplus.com/reference/algorithm/ , https://www.sandordargo.com/blog/2019/01/30/stl-algos-intro
+2) <numeric>	-	https://cplusplus.com/reference/numeric/
+3) <string>		-	https://cplusplus.com/reference/string/
+4) <bitset>		-	https://cplusplus.com/reference/bitset/
+5) <tuple>		-	https://cplusplus.com/reference/tuple/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 struct StringHash{
 
 // (s, p, m)   =   (s[0] * p^0 + s[1] * p^1 + s[2] * p^2 +...+ s[len(s)-1] * p^(len(s) - 1)) % m
