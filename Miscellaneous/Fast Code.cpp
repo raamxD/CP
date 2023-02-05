@@ -652,8 +652,31 @@ vector<int> computeLPS(const string& str) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get a topo ordering for a DAG using a simple DFS
-// https://github.com/raamxD/CP/blob/master/Graph/3.%20Directed%20Acyclic%20Graph/TopologicalSort(DepthFirstSearch).cpp
-		
+
+int n;
+vector<vector<int>> adj;
+vector<bool> used;
+vector<int> toposort;
+
+void dfs(int u){
+	used[u] = 1;
+	for(auto &v :  adj[u]){
+		if(!used[v]){
+			dfs(v);
+		}
+	}
+	toposort.push_back(u);
+}
+vector<int> getTopoOrdering(){
+	for(int i = 0; i < n; ++i){
+		if(!used[i]){
+			dfs(i);
+		}
+	}
+	reverse(begin(toposort), end(toposort));
+	return toposort;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Finding a valid topological ordering + checking if cycle is present in Directed Graph using BFS
 
