@@ -33,43 +33,43 @@ int f() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Longest Increasing Subsequence
+/// Longest Increasing Subsequence (Not Tested)
 
-	// for a given vector<int> a, 
+// for a given vector<int> a : 
 
-	// a) finding lis length
-	vector<int> res
-	res.push_back(a[0]);
-	for(int i = 1; i < n; ++i){
-		if(res.back() < a[i])
-			res.push_back(a[i]);
-		else
-			*lower_bound(begin(res), end(res), a[i]) = a[i];
+// a) finding lis length
+vector<int> res
+res.push_back(a[0]);
+for(int i = 1; i < n; ++i){
+	if(res.back() < a[i])
+		res.push_back(a[i]);
+	else
+		*lower_bound(begin(res), end(res), a[i]) = a[i];
 
-	}
-	cout << "Length of LIS of given array : " << size(res) << "\n";
+}
+cout << "Length of LIS of given array : " << size(res) << "\n";
 
 
-	// b) finding lis 
-	vector<array<int, 2>> v;
-	vector<int> p(n, -1);
-	for(int i = 0; i < n; ++i){
-		array<int, 2> key = {a[i], -1};
-		int j = upper_bound(begin(v), end(v), key) - begin(v);
-		if(j == size(v))
-			v.push_back({a[i], i});
-		else
-			v[j] = {a[i], i};
-		p[i] = (j - 1 >= 0 ? v[j - 1][1]: -1);
-	}
-	vector<int> res;
-	int cur = v.back()[1];
-	while(cur != -1){
-		res.push_back(a[cur]);
-		cur = p[cur];
-	}
-	reverse(begin(res), end(res));
-	cout << "LIS of given array : "; for(auto& i : res) cout << i << " "; cout << "\n";    	
+// b) finding lis 
+vector<array<int, 2>> v;
+vector<int> p(n, -1);
+for(int i = 0; i < n; ++i){
+	array<int, 2> key = {a[i], -1};
+	int j = upper_bound(begin(v), end(v), key) - begin(v);
+	if(j == size(v))
+		v.push_back({a[i], i});
+	else
+		v[j] = {a[i], i};
+	p[i] = (j - 1 >= 0 ? v[j - 1][1]: -1);
+}
+vector<int> res;
+int cur = v.back()[1];
+while(cur != -1){
+	res.push_back(a[cur]);
+	cur = p[cur];
+}
+reverse(begin(res), end(res));
+cout << "LIS of given array : "; for(auto& i : res) cout << i << " "; cout << "\n";    	
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
