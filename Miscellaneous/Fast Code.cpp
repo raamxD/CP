@@ -631,12 +631,68 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)*/
+1) AND(&) : Both 'T' then 'T', otherwise 'F'
+2) OR(|)	 : Both 'F' then 'F', otherwise 'T'
+3) XOR(^) :	Modulo 2 operation on sum of bits
 
-	int digit = (num % pow[i + 1]) / pow[i]; where pow[i] = X ^ i
+4) Left-shift(<<)		:	Shifts all bits to the left and fills vacated bit positions with 0.
+5) RIght-Shift(>>)	:	Shifts all bits to the right and fills vacated bit positions with 0.
+NOTE: Where the left shift filled the vacated positions with 0, a right shift will do the same only when the value is unsigned. 
+If the value is signed then a right shift will fill the vacated bit positions with the sign bit or 0, whichever one is implementation-defined. 
+So the best option is to never right shift signed value
 
-/* For example : Get 2nd digit of Base-10 number num = 2406137 
-	(2406137 % 10^3) / 10^2 = 1; */
+6) One's Complement(~) : The bitwise complement inverts the bits in a single binary number.
+
+7) K-th Bit is Set or Not 	: 	if(N & (1 ≪ K -1) != 0) K'th bit is a set bit.
+8) Setting K-th Bit			: 	N | 1 ≪ (K – 1)
+9) Clearing K-th Bit 		: 	N & ~(1 ≪ K – 1)
+10) Toggling K-th Bit 		: 	N ^(1 ≪ K – 1)
+
+11) Toggling Rightmost One Bit 	: N & N – 1
+12) Isolating Rightmost Zero Bit : ~N & N + 1
+
+13) Number is Power of 2 or Not : if(N & N – 1 == 0) N is power of 2
+14) Multiplying Number by Power of 2 : (N ≪ K) is equal to N * (2 ^ K) where ^ represents exponent
+15) Dividing Number by Power of 2 :	(N ≫ K) is equal to N / (2 ^ K) where ^ represents exponent
+
+16) Performing Average without Division : low + ((high – low) >> 1)
+-------------------------------------------------------------------------------------------------------------
+
+Some more important points for advanced bit manipulations
+
+A)	Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)
+
+	int digit  =  (num  %  pow[i + 1]) /  pow[i]; 		where pow[i] = X ^ i
+ 
+For example :  Get 2nd digit of Base-10 number num = 2406137 
+	(2406137  %  (10 ^ 3)) / 10^2 = 1; 
+-------------------------------------------------------------------------------------------------------------
+
+B)	Enumerating all submasks of a given mask : 
+ref : https://cp-algorithms.com/algebra/all-submasks.html#enumerating-all-submasks-of-a-given-mask
+
+for (int submask =  mask; submask; submask =  (submask -  1)  &  mask){
+	 ... you can use submask here...
+}
+If we want to iterate over submasks of all the mask from [0, (1 << N - 1)], we can do it using above loop
+in Time Complexity of (3^N)
+	
+for(int mask = 0; mask < (1 << N); ++mask){
+	for (int submask =  mask; submask;	submask =  (submask -  1)  &  mask){
+	 	... you can use submask here...
+	}
+}
+-------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Longest Prefix also Suffix
