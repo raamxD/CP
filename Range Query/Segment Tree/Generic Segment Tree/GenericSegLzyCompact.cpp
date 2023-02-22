@@ -75,7 +75,7 @@ public :
 	Monoid(const Monoid& l, const Monoid& r) : {
 	}
 	
-	// TODO : Non Mandatory custom methods
+	// TODO : Non-mandatory custom methods
 };
 class Function{
 public : 
@@ -91,7 +91,7 @@ public :
 	Monoid operator()(const Monoid& node){
 	}
 	
-	// TODO : Non Mandatory custom methods
+	// TODO : Non-mandatory custom methods
 };
 
 /* 
