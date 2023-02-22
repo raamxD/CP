@@ -84,16 +84,6 @@ private:
 			tree[node] = M(tree[LT(node)], tree[RT(node)]);
 		}
 	}
-	void propagate(int node, int tl, int tr){
-		if(!lazy[node].isIdentityFunction()){
-			tree[node] = lazy[node](tree[node]);
-			if(tl != tr){
-				lazy[LT(node)].compose(lazy[node]);
-				lazy[RT(node)].compose(lazy[node]);
-			}
-			lazy[node] = F();
-		}
-	}
 	M query(int node, int tl, int tr, int ql, int qr){
 		if(ql > tr || qr < tl){
 			return M();
@@ -122,7 +112,16 @@ private:
 			tree[node] = M(tree[LT(node)], tree[RT(node)]);
 		}
 	}
-	
+	void propagate(int node, int tl, int tr){
+		if(!lazy[node].isIdentityFunction()){
+			tree[node] = lazy[node](tree[node]);
+			if(tl != tr){
+				lazy[LT(node)].compose(lazy[node]);
+				lazy[RT(node)].compose(lazy[node]);
+			}
+			lazy[node] = F();
+		}
+	}
 public:
 	void build(vector<M>& a){
 		build(0, 0, N-1, a);
