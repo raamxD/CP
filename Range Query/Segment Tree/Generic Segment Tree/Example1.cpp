@@ -92,7 +92,7 @@ class SegTree{
 
 public:
 	typedef M value_type;
-    typedef F func_type;
+   typedef F func_type;
 	
 	static void identityCheck(){
 		if(!F().isIdentityFunction()){
