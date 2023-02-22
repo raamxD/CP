@@ -1,6 +1,6 @@
 /*
 
---Ref: https://s...content-available-to-author-only...b.io/blog/generalizing-segment-trees.html#query-function
+--Ref: https://sharmaeklavya2.github.io/blog/generalizing-segment-trees.html#query-function
 
 --INTUTION:	Range queries on the segment trees modelled as elements of a monoid.
 			Updates on the segment tree are functions on the monoid.
@@ -52,7 +52,7 @@ class SegTree{
 
 public:
 	typedef M value_type;
-    typedef F func_type;
+   typedef F func_type;
 	
 	static void identityCheck(){
 		if(!F().isIdentityFunction()){
