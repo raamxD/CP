@@ -10,7 +10,7 @@ public:
 	#define _  j*2
 	#define __ j*2+1
 	
-  int n, h; vector<M> T; vector<F> L;
+  	int n, h; vector<M> T; vector<F> L;
 	
 	SegLzy(vector<M> a){
 		n = a.size(); h=32-__builtin_clz(n);
