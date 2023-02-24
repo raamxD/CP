@@ -6,7 +6,7 @@ public:
 	#define _  j*2
 	#define __ j*2+1
 	
-  int n, h; vector<M> T; vector<F> L;
+	int n, h; vector<M> T; vector<F> L;
 	
 	SegLzy(vector<M> a){
 		n = a.size(); h=32-__builtin_clz(n);
@@ -14,7 +14,6 @@ public:
 		for(int i=0;i<n;i++)T[n+i]=a[i];
 		for(int j=n-1;j>0;j--)T[j]=M(T[_],T[__]); 
 	}
-
 	M query(int l,int r){
 		push(l,l+1);push(r-1,r); M res;
 		for(l+=n,r+=n;l<r;l/=2,r/=2){
