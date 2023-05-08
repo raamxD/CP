@@ -178,7 +178,7 @@ for (int i = 1; i <= n; i++) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // modpow : calculate (a ^ b) under mod in O(log b)
-int modpow(int a, int b, int mod){
+long long modpow(long long a, int b){
 	int res = 1;
 	while(b > 0){
 		if(b & 1){
@@ -195,6 +195,14 @@ int modpow(int a, int b, int mod){
 int modinv(int a, int mod){
 	return modpow(a, mod - 2, mod);
 }
+
+// shorter version I guess?
+long long modpow(long long a, int b){
+	  long long res = 1;
+	  for(; b; b >>= 1, a = (a * a) % mod)
+			if(b & 1) res = (res * a) % mod;
+	  return res;
+ }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
