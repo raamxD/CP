@@ -308,9 +308,184 @@ for(int i = 0; i <= N; ++i){
 // Useful combinatorics calculations
 
 // Identical Objects into Identical Bins
+// ref : https://brilliant.org/wiki/identical-objects-into-identical-bins/
+
+Case 1 : We have 'n' objects and we can have any number of bins but each bin should have atleast 1 object
+	This problem is same as Integer Partitioning Problem.
+	Let p(n, mx) be ways to partition an integer 'n' such that maximum part size is at most 'mx'
+	Then, 
+		p(n, mx) = p(n - mx, mx) + p(n, mx - 1)
+	Using that, 
+	p(n, n) represents total ways to partition integer 'n' or ways to distribute 'n' objects in bins.
+
+Case 2 : We have 'n' objects and we have fixed 'r' number of bins
+	Let us define dp(n, r) as ways to distribute 'n' objects into at most 'r' number of bins
+	Then,
+		dp(n, r) = dp(n - r, r) + dp(n, r - 1)
+	Why? 
+		because, dp(n - r, r) are the ways where every bin has atlest one object 
+		and dp(n, r - 1) are the ways where we have some bins which are empty
+	From above, we can say that p(n, k) = dp(n, k).
+	i.e  The number of partitions of an integer n into r parts is the same as the number of partitions of n for which the largest part is r.
+	
+// Code : NOT_TESTED 
+
+const int n = 1005;
+const int r = 1005;
+
+// dp[i][j] = ways to distribute 'i' identical objects into 'j' identical bins
+
+vector<vector<long long>> dp(n + 1, vector<long long>(r + 1, 0));
+for(int i = 0; i <= n; ++i){
+    for(int j = 1; j <= r; ++j){
+        if(i == 0){
+            dp[i][j] = 1;
+            continue;
+        }
+        if(i - j >= 0){
+            dp[i][j] = dp[i - j][j];
+        }
+        dp[i][j] += dp[i][j - 1];
+    }
+}
+return dp[n][r];
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
 // Identical Objects into Distinct Bins
+// ref : https://brilliant.org/wiki/identical-objects-into-distinct-bins/
+
+Case 1 : We have 'n' objects and 'r' bins where bins can be empty
+	
+	-Theorem : 	Suppose there are 'n' identical objects to be distributed among 'r' distinct bins. 
+				This can be done in precisely nCr(n + r - 1, r - 1) ways.
+				
+	-Proof : Modeled as stars and bars, there are n stars in a line and r − 1 bars that divide them into distinct groups. 
+				There are a total of n+r−1 things that will be placed, and r−1 of those placements are chosen for the bars. 
+				The stars will be put in the remaining placements. Thus, there are n + r − 1 possible placements of the bars. 
+				Equivalently, there are nCr(n + r − 1, r - 1) possible distributions of n identical objects among r distinct bins.
+	
+	hence, dp[n][r] = nCr(n + r - 1, r - 1)
+
+Case 2 : We have 'n' objects and 'r' bins where bins cannot be empty
+	
+	-Theorem : 	Suppose there are n identical objects to be distributed among r distinct non-empty bins, with n≥r. 
+				This can be done in precisely nCr(n - 1, r - 1) ways.
+				
+	-Proof : 	For this type of problem n≥r must be true. If n<r, then there are not enough objects to fill each of the bins with at least one object.
+				Modeled as stars and bars, there are n stars and r−1 bars to place. In order for the groups to be non-empty, 
+				the bars can only be placed between the stars, and only one bar can be placed between a pair of stars. 
+				Thus, there are n−1 possible placements for the bars. Out of those n−1 possible placements, r−1 are chosen for the bars. 
+				Hence, the number of possible arrangements of stars and bars is nCr(n - 1, r - 1).
+				Equivalently, there are nCr(n - 1, r - 1) distributions of n identical objects into r distinct non-empty bins.
+
+	hence, dp[n][r] = nCr(n - 1, r - 1)
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
 // Distinct Objects into Identical Bins
+// ref : https://brilliant.org/wiki/distinct-objects-into-identical-bins/
+// ref : https://codeforces.com/blog/entry/117906
+// ref : https://en.wikipedia.org/wiki/Bijection,_injection_and_surjection
+
+Case 1 : We have 'n' objects and 'k' bins where bins cannot be empty
+	The Stirling number of 2nd kind, S(n, k) is the number of ways to partition a set of n objects into k groups.
+	We'll look into two ways to find stirling numbers.
+	
+	a) Recurrence Relation : S(n, k) = k * S(n - 1, k) + S(n - 1, k - 1) where 1 <= k <= n
+	
+	Let us now show that the recurrence formula follows from the enumerative definition. 
+	Division of n objects into k groups can be achieved by only one of two basic maneuvers: 
+		We could partition the first n-1 objects into k groups, and then add object a 'n' into one of those groups. There are k * S(n-1,k) ways to do this. 
+		We could partition the first n-1 objects into k-1 groups and then add object a 'n' as a new, 1 element group. This gives an additional S(n-1,k-1) ways to create the desired partition.
+		
+	Code : 
+	
+		const int mod = 1e9 + 7;
+
+		// Function to calculate the Stirling numbers using DP tabulation
+		vector<vector<long long>> stirling_second;
+		void fillStirlingSecondKind(int N, int K){
+			assert(K <= N);
+			stirling_second.resize(N + 1, vector<long long>(K + 1)); 
+			// Fill in the base cases
+			stirling_second[0][0] = 1;
+			// dp(n, k) = dp(n - 1, k - 1) + k * dp(n - 1, k) where 1 <= k <= n
+			for(int i = 1; i <= N; ++i){
+				for(int j = 1; j <= i; ++j){
+					stirling_second[i][j] = (stirling_second[i - 1][j - 1] + (stirling_second[i - 1][j] * j) % mod) % mod;
+				}
+			}
+		}
+		
+	b) Inclusion-exclusion : 
+		A -> B onto function which means every element in 'B' has a pre-image in 'A'.
+		Let's say, A has 'n' points and B has 'k' points
+
+		Total number of functions from A -> B is cleary k ^ n; For each element in 'A' we have k choices to map.
+		To count the number of onto functions we can now use inclusion exclusion principal by substracting those
+		functions in which exactly 1, 2, 3. . .  elements of 'B' were not mapped.
+
+		Total number of functions where at least 1 element in 'B' is not mapped = kC1 * [(k - 1) ^ n]
+		Why, ways to select that unmapped element = kC1 and ways to map remaining elements = (k - 1) ^ n
+		Similarly,
+		Total number of functions where at least 2 element in 'B' is not mapped = kC2 * [(k - 2) ^ n]
+		Total number of functions where at least 3 element in 'B' is not mapped = kC3 * [(k - 3) ^ n]
+		..
+		..
+		..
+		Total number of functions where at least k element in 'B' is not mapped = kCk * [(k - k) ^ n]
+
+		On using inclusion - exclusion principal, 
+
+		Onto(n, k) = (k ^ n) - [kC1*(k-1)^n] + [kc2*(k-2)^n] - [kc3*(k-3)^n] + .. . ..[kCk*(k-k)^n]
+
+		Now we have calculated no. of onto functions, we can go back to our original problem of stirling numbers of second kind. 
+		So that problem is exactly same as this onto problem, except that here we are distinguishing k subsets also, 
+		but in our original problem, k subsets were identical, so we divide whole thing we derived by k!, 
+		so our final formula for S(n,k) becomes
+
+		S(n, k) = Onto(n, k) / k!
+				= [(k ^ n) - [kC1*(k-1)^n] + [kc2*(k-2)^n] - [kc3*(k-3)^n] + .. . ..[kCk*(k-k)^n]] / k!
+			
+		Note : A row of Stirling number can be calulated in O(nlogn) time complexity using polynomial multiplication
+			   C(x) = A(x) * B(x), where 
+				+-----------------------------------+
+				|			n						|
+				|	A(x) = SUM	[(-1)^k / i!] x^k 	|
+				|		   k>=0						|
+				+-----------------------------------+
+				|			n						|
+				|	B(x) = SUM	[(i^n) / i!] x^k 	|
+				|		   k>=0						|
+				+-----------------------------------+		  
+			
+			then, S(n, k) = c(k), where c(k) is the coefficient of x^k in C(x).
+			
+Case 2 : We have 'n' objects and 'k' bins where bins can be empty
+
+		The Bell numbers count the number of ways n distinct objects can be distributed into up to n identical non-empty bins. 
+		In the language of sets, Bell numbers count the partitions of a set of n objects into non-empty disjoint subsets whose union is the entire set.
+		
+		The Stirling numbers denote the number of ways to arrange n distinct objects into k identical boxes,
+		and the Bell numbers denote the number of ways to arrange n distinct objects into up to n identical objects.
+		
+		Hence, Bell numbers are computed as a sum of Stirling numbers:
+		
+					 ---------------------
+					|		  n			  |
+					|	Bn = SUM S(n, k)  |
+					|		 k=1		  |
+					 ---------------------
+					 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
 // Distinct Objects into Distinct Bins
+// ref : https://brilliant.org/wiki/distinct-objects-into-distinct-bins/
+
+Suppose there are n distinct objects that are to be distributed among r distinct bins. This can be done in precisely r ^ n ways.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
