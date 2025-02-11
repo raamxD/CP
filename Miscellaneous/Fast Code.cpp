@@ -420,7 +420,7 @@ Case 1 : We have 'n' objects and 'k' bins where bins cannot be empty
 		
 	b) Inclusion-exclusion : 
 		A -> B onto function which means every element in 'B' has a pre-image in 'A'.
-		Let's say, A has 'n' points and B has 'k' points
+		Lets say, A has 'n' points and B has 'k' points
 
 		Total number of functions from A -> B is cleary k ^ n; For each element in 'A' we have k choices to map.
 		To count the number of onto functions we can now use inclusion exclusion principal by substracting those
@@ -451,13 +451,13 @@ Case 1 : We have 'n' objects and 'k' bins where bins cannot be empty
 		Note : A row of Stirling number can be calulated in O(nlogn) time complexity using polynomial multiplication
 			   C(x) = A(x) * B(x), where 
 				+-----------------------------------+
-				|			n						|
+				|			n						         |
 				|	A(x) = SUM	[(-1)^k / i!] x^k 	|
-				|		   k>=0						|
+				|		   k>=0						      |
 				+-----------------------------------+
-				|			n						|
-				|	B(x) = SUM	[(i^n) / i!] x^k 	|
-				|		   k>=0						|
+				|			n						         |
+				|	B(x) = SUM	[(i^n) / i!] x^k 	   |
+				|		   k>=0						      |
 				+-----------------------------------+		  
 			
 			then, S(n, k) = c(k), where c(k) is the coefficient of x^k in C(x).
@@ -473,9 +473,9 @@ Case 2 : We have 'n' objects and 'k' bins where bins can be empty
 		Hence, Bell numbers are computed as a sum of Stirling numbers:
 		
 					 ---------------------
-					|		  n			  |
+					|		  n			   |
 					|	Bn = SUM S(n, k)  |
-					|		 k=1		  |
+					|		 k=1		      |
 					 ---------------------
 					 
 -----------------------------------------------------------------------------------------------------------------------------------------------
