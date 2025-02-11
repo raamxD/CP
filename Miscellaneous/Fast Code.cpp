@@ -824,7 +824,7 @@ NOTE: Where the left shift filled the vacated positions with 0, a right shift wi
 If the value is signed then a right shift will fill the vacated bit positions with the sign bit or 0, whichever one is implementation-defined. 
 So the best option is to never right shift signed value
 
-6) One's Complement(~) : The bitwise complement inverts the bits in a single binary number.
+6) Ones Complement(~) : The bitwise complement inverts the bits in a single binary number.
 
 7) K-th Bit is Set or Not 	: 	if(N & (1 ≪ K -1) != 0) K'th bit is a set bit.
 8) Setting K-th Bit			: 	N | 1 ≪ (K – 1)
@@ -843,7 +843,7 @@ So the best option is to never right shift signed value
 
 Some more important points for advanced bit manipulations
 
-A)	Accessing the i'th digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)
+A)	Accessing the ith digit (0-based lsb) of any number in base X. (Quite Useful Trick for Base-X Bitmasks)
 
 	int digit  =  (num  %  pow[i + 1]) /  pow[i]; 		where pow[i] = X ^ i
  
