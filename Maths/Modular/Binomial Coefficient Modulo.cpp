@@ -10,9 +10,9 @@ Let 'p' be the prime number and let 'n' and 'm' be non-negative integers. Expres
 where 'n_i' and 'm_i' are the digits in the base 'p' representation. Then, 
 
 +-------------------------------------------+
-|					 k						|
-|	C(n, m) mod p = MUL C(n_i, m_i) mod p	|
-|					i=0						|
+|					 k						           |
+|	C(n, m) mod p = MUL C(n_i, m_i) mod p	  |
+|					i=0						        |
 +-------------------------------------------+
 
 CPP Code : 
